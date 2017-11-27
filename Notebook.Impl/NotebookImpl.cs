@@ -73,7 +73,7 @@ namespace Notebook.Impl
         }
 
         readonly List<Contact> _list;
-
+       
         public NotebookImpl()
         {
             _list = new List<Contact>();

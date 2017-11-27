@@ -1,0 +1,6 @@
+C:\Users\User\source\repos\Notebook v3\Notebook.Interfaces\bin\Debug\Notebook.Interfaces.dll
+C:\Users\User\source\repos\Notebook v3\Notebook.Interfaces\bin\Debug\Notebook.Interfaces.pdb
+C:\Users\User\source\repos\Notebook v3\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.csprojResolveAssemblyReference.cache
+C:\Users\User\source\repos\Notebook v3\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\Notebook v3\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.dll
+C:\Users\User\source\repos\Notebook v3\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.pdb
