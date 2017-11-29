@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notebook.Interfaces", "Note
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notebook.Impl", "Notebook.Impl\Notebook.Impl.csproj", "{183E12EC-BD0A-4FAF-9F14-3D72E633CF66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCard", "VCard\VCard.csproj", "{07D02F4D-EF0F-4BEA-AA12-3BB9AEF73E12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{183E12EC-BD0A-4FAF-9F14-3D72E633CF66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{183E12EC-BD0A-4FAF-9F14-3D72E633CF66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{183E12EC-BD0A-4FAF-9F14-3D72E633CF66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07D02F4D-EF0F-4BEA-AA12-3BB9AEF73E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07D02F4D-EF0F-4BEA-AA12-3BB9AEF73E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07D02F4D-EF0F-4BEA-AA12-3BB9AEF73E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07D02F4D-EF0F-4BEA-AA12-3BB9AEF73E12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

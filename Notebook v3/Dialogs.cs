@@ -14,13 +14,21 @@ namespace Notebook_v3
             ContactInfo note = new ContactInfo();
             Console.Clear();
             Console.WriteLine("New contact:");
-            if ((note.Name = ReadProp("Name: ", "Invalid name!", ValidName)) == null)
+            if ((note.FirstName = ReadProp("First Name: ", "Invalid first name!", ValidName)) == null)
                 return AddNew();
-            if ((note.Surname = ReadProp("Surname: ", "Invalid surname!", ValidName)) == null)
+            if ((note.LastName = ReadProp("Last Name: ", "Invalid last name!", ValidName)) == null)
+                return AddNew();
+            if ((note.Nickname = ReadProp("Nickname: ", "Invalid nickname!", ValidName)) == null)
+                return AddNew();
+            if ((note.Birthday = ReadProp("Birthday(YYYY-MM-DD): ", "Invalid birthday!", ValidDate)) == null)
                 return AddNew();
             if ((note.Phone = ReadProp("Phone: ", "Invalid phone!", ValidNumber)) == null)
                 return AddNew();
             if ((note.Email = ReadProp("E-mail: ", "Invalid email!", ValidEmail)) == null)
+                return AddNew();
+            if ((note.Mailer = ReadProp("Mailer: ", "", ValidAlways)) == null)
+                return AddNew();
+            if ((note.Note = ReadProp("Note: ", "", ValidAlways)) == null)
                 return AddNew();
             return note;
         }
@@ -48,6 +56,13 @@ namespace Notebook_v3
             return answer;
         }
 
+        public string LoadPath()
+        {
+            Console.Write("Please, input path: ");
+            string _path = Console.ReadLine();
+            return _path;
+        }
+
         public void PrintSelection(List<IContactInfo> book)
         {
             Console.Clear();
@@ -63,13 +78,22 @@ namespace Notebook_v3
             foreach (IContactInfo tmp in contacts)
             {
                 i += 1;
-                Console.Write("#" + i + "\tName: " + tmp.Name + "\n");
-                Console.WriteLine("\tSurname: " + tmp.Surname);
+                Console.Write("#" + i + "\tName: " + tmp.FirstName + "\n");
+                Console.WriteLine("\tSurname: " + tmp.LastName);
+                Console.WriteLine("\tNickname: " + tmp.Nickname);
+                Console.WriteLine("\tBirthday: " + tmp.Birthday);
                 Console.WriteLine("\tPhone: " + tmp.Phone);
                 Console.WriteLine("\tE-mail: " + tmp.Email);
+                Console.WriteLine("\tMailer: " + tmp.Mailer);
+                Console.WriteLine("\tNote: " + tmp.Note);
             }
             if (contacts.Count == 0)
                 Console.WriteLine("No contacts");
+        }
+
+        public static bool ValidAlways(string str)
+        {
+            return true;
         }
 
         public static bool ValidNumber(string number)
@@ -82,6 +106,23 @@ namespace Notebook_v3
                 }
             }
             return true;
+        }
+
+        public static bool ValidDate(string date)
+        {
+            short count = 0;
+            foreach (char letter in date)
+            {
+                if ((letter > '9' || letter < '0') && letter != '-')
+                {
+                    return false;
+                }
+                ++count;
+            }
+            if (count != 10 || date[4]!='-' || date[7]!='-')
+                return false;
+            else
+                return true;
         }
 
         public static bool ValidName(string name)

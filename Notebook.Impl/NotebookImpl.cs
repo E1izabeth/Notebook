@@ -4,22 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Notebook.Interfaces;
+using System.IO;
 
 namespace Notebook.Impl
 {
     class Contact : IContactInfo
     {
-        public string Name { get; private set; }
-        public string Surname { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string Nickname { get; private set; }
+        public string Birthday { get; private set; }
         public string Phone { get; private set; }
         public string Email { get; private set; }
+        public string Mailer { get; private set; }
+        public string Note { get; private set; }
 
-        public Contact(string name, string surname, string phone, string email)
+        public Contact(string FirstName, string LastName, string Nickname, string Birthday,
+                                    string Phone, string Email, string Mailer, string Note)
         {
-            this.Name = name;
-            this.Surname = surname;
-            this.Phone = phone;
-            this.Email = email;
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.Nickname = Nickname;
+            this.Birthday = Birthday;
+            this.Phone = Phone;
+            this.Email = Email;
+            this.Mailer = Mailer;
+            this.Note = Note;
         }
     }
 
@@ -45,7 +55,7 @@ namespace Notebook.Impl
 
             void ISearchCriteriaVisitor.VisitByName(ByNameSearchCriteria sc)
             {
-                _result = _result.Concat(_initial.Where(c => c.Name.Contains(sc.Text)));
+                _result = _result.Concat(_initial.Where(c => c.FirstName.Contains(sc.Text)));
             }
 
             void ISearchCriteriaVisitor.VisitByPhone(ByPhoneSearchCriteria sc)
@@ -55,7 +65,7 @@ namespace Notebook.Impl
 
             void ISearchCriteriaVisitor.VisitBySurname(BySurnameSearchCriteria sc)
             {
-                _result = _result.Concat(_initial.Where(c => c.Surname.Contains(sc.Text)));
+                _result = _result.Concat(_initial.Where(c => c.LastName.Contains(sc.Text)));
             }
 
             #endregion
@@ -81,9 +91,10 @@ namespace Notebook.Impl
 
         public void NewElement(IContactInfo nc)
         {
-            _list.Add(new Contact(nc.Name, nc.Surname, nc.Phone, nc.Email));
+            _list.Add(new Contact(nc.FirstName, nc.LastName,nc.Nickname, nc.Birthday, nc.Phone, nc.Email, nc.Mailer, nc.Note));
+            //load to vcardfile
         }
-
+        
         public IEnumerable<IContactInfo> GetContacts()
         {
             return _list.ToArray();
@@ -97,5 +108,14 @@ namespace Notebook.Impl
 
             return executor.GetSubset();
         }
+
+        /*public void Loader(string _path)
+        {
+            var DataSource = File.ReadAllLines(_path);
+
+            Contact _newContact = new Contact("", "", "", "", "", "", "", "");
+            _newContact.TryLoadVCard(DataSource, _newContact);
+            _list.Add(_newContact);
+        */
     }
 }

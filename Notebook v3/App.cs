@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Notebook.Interfaces;
+using System.IO;
 
 namespace Notebook_v3
 {
@@ -24,6 +25,11 @@ namespace Notebook_v3
         void AddNew()
         {
             _book.NewElement(_user.AddNew());
+        }
+
+        void LoadNew()
+        {
+            _book.Loader(_user.LoadPath());
         }
 
         void NameSearch()
@@ -65,6 +71,7 @@ namespace Notebook_v3
         {
             _user.PrintSelection(_book.GetContacts(new SearchSpec(args)).ToList());
         }
+    
 
         /*void Request(Predicate<Contact> Selection)
         {
@@ -78,6 +85,7 @@ namespace Notebook_v3
             var menu = new Menu(
                 new MenuItem("Menu") {
                     new MenuItem("View all", app.ViewAll),
+                    new MenuItem("Load new", app.LoadNew),
                     new MenuItem("Add New", app.AddNew ),
                     new MenuItem("Search") {
                         new MenuItem("By name", app.NameSearch),
@@ -91,6 +99,5 @@ namespace Notebook_v3
 
             menu.RunMenu();
         }
-
     }
 }

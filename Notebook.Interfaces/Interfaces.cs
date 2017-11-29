@@ -10,10 +10,14 @@ namespace Notebook.Interfaces
 
     public interface IContactInfo
     {
-        string Name { get; }
-        string Surname { get; }
+        string FirstName { get; }
+        string LastName { get; }
+        string Nickname { get; }
+        string Birthday { get; }
         string Phone { get; }
         string Email { get; }
+        string Mailer { get; }
+        string Note { get; }
     }
 
 
@@ -24,5 +28,6 @@ namespace Notebook.Interfaces
 
         IEnumerable<IContactInfo> GetContacts();
         IEnumerable<IContactInfo> GetContacts(SearchSpec spec);
-    }
+        //void Loader(string _path);
+    }   
 }
