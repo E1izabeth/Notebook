@@ -8,9 +8,13 @@ namespace Notebook.Interfaces
 {
     public class ContactInfo : IContactInfo
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Nickname { get; set; }
+        public string Birthday { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public string Mailer { get; set; }
+        public string Note { get; set; }
     }
 }
