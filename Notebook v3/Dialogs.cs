@@ -12,7 +12,7 @@ namespace Notebook_v3
         public IContactInfo AddNew()
         {
             ContactInfo note = new ContactInfo();
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine("New contact:");
             if ((note.FirstName = ReadProp("First Name: ", "Invalid first name!", ValidName)) == null)
                 return AddNew();
@@ -65,7 +65,7 @@ namespace Notebook_v3
 
         public void PrintSelection(List<IContactInfo> book)
         {
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine("Results(" + book.Count + ")");
             this.PrintCollectionImpl(book);
             Console.WriteLine("Press any button to continue...");

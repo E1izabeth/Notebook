@@ -1,0 +1,6 @@
+C:\Users\User\source\repos\Notebook v3 - 2\VCard\bin\Debug\VCard.dll
+C:\Users\User\source\repos\Notebook v3 - 2\VCard\bin\Debug\VCard.pdb
+C:\Users\User\source\repos\Notebook v3 - 2\VCard\obj\Debug\VCard.csprojResolveAssemblyReference.cache
+C:\Users\User\source\repos\Notebook v3 - 2\VCard\obj\Debug\VCard.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\Notebook v3 - 2\VCard\obj\Debug\VCard.dll
+C:\Users\User\source\repos\Notebook v3 - 2\VCard\obj\Debug\VCard.pdb

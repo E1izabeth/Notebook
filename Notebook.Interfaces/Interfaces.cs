@@ -28,6 +28,6 @@ namespace Notebook.Interfaces
 
         IEnumerable<IContactInfo> GetContacts();
         IEnumerable<IContactInfo> GetContacts(SearchSpec spec);
-        //void Loader(string _path);
+        int Count();
     }   
 }

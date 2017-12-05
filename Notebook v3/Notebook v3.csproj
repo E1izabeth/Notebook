@@ -61,6 +61,10 @@
       <Project>{39b7084c-99df-4426-b0db-99f4c6246d2f}</Project>
       <Name>Notebook.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VCard\VCard.csproj">
+      <Project>{07d02f4d-ef0f-4bea-aa12-3bb9aef73e12}</Project>
+      <Name>VCard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

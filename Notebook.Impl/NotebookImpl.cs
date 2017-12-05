@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Notebook.Interfaces;
 using System.IO;
 
+
 namespace Notebook.Impl
 {
     class Contact : IContactInfo
@@ -78,7 +79,9 @@ namespace Notebook.Impl
 
             public IEnumerable<IContactInfo> GetSubset()
             {
-                return _result.ToArray();
+                var arr = _result.ToArray();
+                var result = arr.Distinct();
+                return result;
             }
         }
 
@@ -92,7 +95,6 @@ namespace Notebook.Impl
         public void NewElement(IContactInfo nc)
         {
             _list.Add(new Contact(nc.FirstName, nc.LastName,nc.Nickname, nc.Birthday, nc.Phone, nc.Email, nc.Mailer, nc.Note));
-            //load to vcardfile
         }
         
         public IEnumerable<IContactInfo> GetContacts()
@@ -109,13 +111,10 @@ namespace Notebook.Impl
             return executor.GetSubset();
         }
 
-        /*public void Loader(string _path)
+        public int Count()
         {
-            var DataSource = File.ReadAllLines(_path);
+            return _list.Count;
+        }
 
-            Contact _newContact = new Contact("", "", "", "", "", "", "", "");
-            _newContact.TryLoadVCard(DataSource, _newContact);
-            _list.Add(_newContact);
-        */
     }
 }
