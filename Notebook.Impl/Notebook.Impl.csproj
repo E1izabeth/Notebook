@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{36228f43-a4a6-49dd-abb0-a0c68ebb5076}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Notebook.Interfaces\Notebook.Interfaces.csproj">
       <Project>{39b7084c-99df-4426-b0db-99f4c6246d2f}</Project>
       <Name>Notebook.Interfaces</Name>

@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Notebook.Interfaces;
 using System.IO;
 using VCard;
+using System.Net.Sockets;
+using System.Net;
 
-namespace Notebook_v3
+namespace Notebook
 {
     class App
     {
         readonly Dialogs _user = new Dialogs();
-        readonly INotebook _book = Notebook.Impl.Notebooks.CreateLocalNotebook();
+        readonly INotebook _book;
 
-        public App()
+        public App(INotebook nb)
         {
+            _book = nb;
         }
 
         void ViewAll()
@@ -39,7 +42,7 @@ namespace Notebook_v3
                 LoadNew();
             }
         }
-
+        
         void LoadNew()
         {
             string path = _user.LoadPath();
@@ -123,15 +126,15 @@ namespace Notebook_v3
             _user.PrintSelection(_book.List.FindAll(Selection));
         }*/
 
-        static void Main(string[] args)
+        static void Main(string[] argc)
         {
-            var app = new App();
+            var app = new App(Notebook.Impl.Notebooks.CreateRemoteNotebook(Int32.Parse(argc[0])));
 
             var menu = new Menu(
                 new MenuItem("Menu") {
-                    new MenuItem("View all", app.ViewAll),
+                    new MenuItem("View all", app.ViewAll),                                      
                     new MenuItem("Load new", app.LoadNew),
-                    new MenuItem("Add New", app.AddNew ),
+                    new MenuItem("Add New", app.AddNew ),                                      
                     new MenuItem("Search") {
                         new MenuItem("By name", app.NameSearch),
                         new MenuItem("By surname", app.SurnameSearch),
@@ -188,7 +191,7 @@ namespace Notebook_v3
                             string.Empty,
                             new ContentLine(Names.VERSION, "3.0"),
                             new ContentLine(Names.N, Tmp.LastName + ";" + Tmp.FirstName),
-                            //new ContentLine(Names.FN, Tmp.LastName + " " + Tmp.FirstName),
+                            new ContentLine(Names.FN, Tmp.LastName + " " + Tmp.FirstName),
                             new ContentLine(Names.NICKNAME, Tmp.Nickname),
                             new ContentLine(Names.BDAY, Tmp.Birthday),
                             new ContentLine(Names.TEL, Tmp.Phone),

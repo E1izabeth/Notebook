@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A54D722A-8DA5-4371-A5F6-202E7FBB3B35}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Notebook_v3</RootNamespace>
-    <AssemblyName>Notebook v3</AssemblyName>
+    <ProjectGuid>{36228F43-A4A6-49DD-ABB0-A0C68EBB5076}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Client</RootNamespace>
+    <AssemblyName>Client</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,28 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dialogs.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="MenuItem.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="App.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Notebook.Impl\Notebook.Impl.csproj">
-      <Project>{183e12ec-bd0a-4faf-9f14-3d72e633cf66}</Project>
-      <Name>Notebook.Impl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Notebook.Interfaces\Notebook.Interfaces.csproj">
       <Project>{39b7084c-99df-4426-b0db-99f4c6246d2f}</Project>
       <Name>Notebook.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VCard\VCard.csproj">
-      <Project>{07d02f4d-ef0f-4bea-aa12-3bb9aef73e12}</Project>
-      <Name>VCard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

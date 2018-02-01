@@ -1,0 +1,8 @@
+C:\Users\User\source\repos\NoteBook\Client\bin\Debug\Client.dll
+C:\Users\User\source\repos\NoteBook\Client\bin\Debug\Client.pdb
+C:\Users\User\source\repos\NoteBook\Client\bin\Debug\Notebook.Interfaces.dll
+C:\Users\User\source\repos\NoteBook\Client\bin\Debug\Notebook.Interfaces.pdb
+C:\Users\User\source\repos\NoteBook\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\User\source\repos\NoteBook\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\NoteBook\Client\obj\Debug\Client.dll
+C:\Users\User\source\repos\NoteBook\Client\obj\Debug\Client.pdb

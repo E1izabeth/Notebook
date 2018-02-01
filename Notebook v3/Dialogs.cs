@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Notebook.Interfaces;
 
-namespace Notebook_v3
+namespace Notebook
 {
     class Dialogs
     {

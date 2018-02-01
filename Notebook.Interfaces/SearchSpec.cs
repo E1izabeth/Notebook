@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Notebook.Interfaces
 {
@@ -15,6 +16,7 @@ namespace Notebook.Interfaces
         void VisitByEmail(ByEmailSearchCriteria sc);
     }
 
+    [Serializable]
     public abstract class SearchCriteria
     {
         public string Text { get; private set; }
@@ -32,6 +34,7 @@ namespace Notebook.Interfaces
         protected abstract void ApplyImpl(ISearchCriteriaVisitor visitor);
     }
 
+    [Serializable]
     public class ByNameSearchCriteria : SearchCriteria
     {
         public ByNameSearchCriteria(string text)
@@ -43,6 +46,7 @@ namespace Notebook.Interfaces
         }
     }
 
+    [Serializable]
     public class BySurnameSearchCriteria : SearchCriteria
     {
         public BySurnameSearchCriteria(string text)
@@ -54,6 +58,7 @@ namespace Notebook.Interfaces
         }
     }
 
+    [Serializable]
     public class ByPhoneSearchCriteria : SearchCriteria
     {
         public ByPhoneSearchCriteria(string text)
@@ -65,6 +70,7 @@ namespace Notebook.Interfaces
         }
     }
 
+    [Serializable]
     public class ByEmailSearchCriteria : SearchCriteria
     {
         public ByEmailSearchCriteria(string text)
@@ -76,6 +82,7 @@ namespace Notebook.Interfaces
         }
     }
 
+    [Serializable]
     public class SearchSpec
     {
         public ReadOnlyCollection<SearchCriteria> Conditions { get; private set; }
@@ -85,4 +92,5 @@ namespace Notebook.Interfaces
             this.Conditions = new ReadOnlyCollection<SearchCriteria>(conds);
         }
     }
+
 }

@@ -9,7 +9,8 @@ using System.IO;
 
 namespace Notebook.Impl
 {
-    class Contact : IContactInfo
+    [Serializable]
+    class Contact: IContactInfo
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -34,7 +35,7 @@ namespace Notebook.Impl
         }
     }
 
-    class NotebookImpl : INotebook
+    public class NotebookImpl : INotebook
     {
         class QueryExecutor : ISearchCriteriaVisitor
         {
@@ -87,9 +88,12 @@ namespace Notebook.Impl
 
         readonly List<Contact> _list;
        
+        //TODO: don't forget!
         public NotebookImpl()
         {
             _list = new List<Contact>();
+            _list.Add(new Contact("qqwer", "qdcvgfds", "qsda", "22.33.4421", "12345", "q@m.ru", "q", "q"));
+            _list.Add(new Contact("frwer", "css", "hre", "21.32.4426", "12543", "q@m.ru", "q", "q"));
         }
 
         public void NewElement(IContactInfo nc)

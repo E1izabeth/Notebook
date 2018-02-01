@@ -14,3 +14,13 @@ C:\Users\User\source\repos\Notebook v3 - 2\Notebook.Impl\obj\Debug\Notebook.Impl
 C:\Users\User\source\repos\Notebook v3 - 2\Notebook.Impl\obj\Debug\Notebook.Impl.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\Notebook v3 - 2\Notebook.Impl\obj\Debug\Notebook.Impl.dll
 C:\Users\User\source\repos\Notebook v3 - 2\Notebook.Impl\obj\Debug\Notebook.Impl.pdb
+C:\Users\User\source\repos\Notebook\Notebook.Impl\obj\Debug\Notebook.Impl.csprojResolveAssemblyReference.cache
+C:\Users\User\source\repos\Notebook\Notebook.Impl\obj\Debug\Notebook.Impl.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\Notebook\Notebook.Impl\obj\Debug\Notebook.Impl.dll
+C:\Users\User\source\repos\Notebook\Notebook.Impl\obj\Debug\Notebook.Impl.pdb
+C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Impl.dll
+C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Impl.pdb
+C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Interfaces.dll
+C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Interfaces.pdb
+C:\Users\User\source\repos\NoteBook\Notebook.Impl\bin\Debug\Client.dll
+C:\Users\User\source\repos\NoteBook\Notebook.Impl\bin\Debug\Client.pdb

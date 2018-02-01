@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Notebook_v3
+namespace Notebook
 {
 
     interface IMenuItem : IEnumerable<IMenuItem>

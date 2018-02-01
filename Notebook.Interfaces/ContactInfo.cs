@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Notebook.Interfaces
 {
-    public class ContactInfo : IContactInfo
+    [Serializable]
+    public class ContactInfo:IContactInfo
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

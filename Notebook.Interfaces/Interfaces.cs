@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Notebook.Interfaces
 {
-
     public interface IContactInfo
     {
         string FirstName { get; }
@@ -19,7 +18,6 @@ namespace Notebook.Interfaces
         string Mailer { get; }
         string Note { get; }
     }
-
 
     public interface INotebook
     {
