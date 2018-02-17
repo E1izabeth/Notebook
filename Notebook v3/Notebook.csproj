@@ -49,6 +49,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,14 +64,19 @@
     <Compile Include="Menu.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\text.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>text.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Notebook.Impl\Notebook.Impl.csproj">
-      <Project>{183e12ec-bd0a-4faf-9f14-3d72e633cf66}</Project>
-      <Name>Notebook.Impl</Name>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{36228f43-a4a6-49dd-abb0-a0c68ebb5076}</Project>
+      <Name>Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\Notebook.Interfaces\Notebook.Interfaces.csproj">
       <Project>{39b7084c-99df-4426-b0db-99f4c6246d2f}</Project>
@@ -92,6 +98,13 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\text.ru.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

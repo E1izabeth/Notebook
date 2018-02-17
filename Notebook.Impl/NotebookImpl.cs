@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Notebook.Interfaces;
 using System.IO;
-
+using System.ServiceModel;
+using System.ServiceModel.Description;
+using System.Runtime.Serialization;
 
 namespace Notebook.Impl
 {
-    [Serializable]
-    class Contact: IContactInfo
+    class Contact : IContactInfo
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -35,17 +36,18 @@ namespace Notebook.Impl
         }
     }
 
-    public class NotebookImpl : INotebook
+    //[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    public class NotebookImpl : MarshalByRefObject, INotebookLocal
     {
         class QueryExecutor : ISearchCriteriaVisitor
         {
-            IEnumerable<IContactInfo> _initial;
-            IEnumerable<IContactInfo> _result;
+            IEnumerable<Contact> _initial;
+            IEnumerable<Contact> _result;
 
-            public QueryExecutor(IEnumerable<IContactInfo> subset)
+            public QueryExecutor(IEnumerable<Contact> subset)
             {
                 _initial = subset;
-                _result = new IContactInfo[0];
+                _result = new Contact[0];
             }
 
             #region ISearchCriteriaVisitor impl
@@ -74,11 +76,11 @@ namespace Notebook.Impl
 
             public void Run(SearchSpec spec)
             {
-                foreach (var item in spec.Conditions)
+                foreach (var item in spec.Conditions.Where(cond => cond != null))
                     item.Apply(this);
             }
 
-            public IEnumerable<IContactInfo> GetSubset()
+            public IEnumerable<Contact> GetSubset()
             {
                 var arr = _result.ToArray();
                 var result = arr.Distinct();
@@ -87,7 +89,8 @@ namespace Notebook.Impl
         }
 
         readonly List<Contact> _list;
-       
+        readonly RWLock _lock = new RWLock();
+
         //TODO: don't forget!
         public NotebookImpl()
         {
@@ -98,26 +101,58 @@ namespace Notebook.Impl
 
         public void NewElement(IContactInfo nc)
         {
-            _list.Add(new Contact(nc.FirstName, nc.LastName,nc.Nickname, nc.Birthday, nc.Phone, nc.Email, nc.Mailer, nc.Note));
+            using (_lock.Write())
+            {
+                _list.Add(new Contact(nc.FirstName, nc.LastName, nc.Nickname, nc.Birthday, nc.Phone, nc.Email, nc.Mailer, nc.Note));
+            }
         }
-        
+
         public IEnumerable<IContactInfo> GetContacts()
         {
-            return _list.ToArray();
+            using (_lock.Read())
+            {
+                return ConvertListOfContactToListOfContactInfo(_list);
+            }
         }
-
+        
         public IEnumerable<IContactInfo> GetContacts(SearchSpec spec)
         {
-            var executor = new QueryExecutor(_list);
+            using (_lock.Read())
+            {
+                var executor = new QueryExecutor(_list);
 
-            executor.Run(spec);
+                executor.Run(spec);
 
-            return executor.GetSubset();
+                return ConvertListOfContactToListOfContactInfo(executor.GetSubset().ToList());
+            }
         }
 
         public int Count()
         {
-            return _list.Count;
+            using (_lock.Read())
+            {
+                return _list.Count;
+            }
+        }
+
+        private IEnumerable<IContactInfo> ConvertListOfContactToListOfContactInfo(List<Contact> list)
+        {
+            var newList = new List<ContactInfo>(list.Count);
+            foreach (var item in list)
+            {
+                var cnt = new ContactInfo {
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    Birthday = item.Birthday,
+                    Nickname = item.Nickname,
+                    Email = item.Email,
+                    Phone = item.Phone,
+                    Mailer = item.Mailer,
+                    Note = item.Note
+                };
+                newList.Add(cnt);
+            }
+            return newList;
         }
 
     }

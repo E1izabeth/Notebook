@@ -5,11 +5,14 @@ C:\Users\User\source\repos\Notebook\Notebook v3\obj\Debug\Notebook v3.pdb
 C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\Notebook v3.exe.config
 C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\Notebook v3.exe
 C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\Notebook v3.pdb
-C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\Notebook.Impl.dll
 C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\Notebook.Interfaces.dll
 C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\VCard.dll
-C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\Notebook.Impl.pdb
 C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\Notebook.Interfaces.pdb
 C:\Users\User\source\repos\Notebook\Notebook v3\bin\Debug\VCard.pdb
 C:\Users\User\source\repos\NoteBook\Notebook v3\bin\Debug\Client.dll
 C:\Users\User\source\repos\NoteBook\Notebook v3\bin\Debug\Client.pdb
+C:\Users\User\source\repos\NoteBook\Notebook v3\obj\Debug\Notebook_v3.Properties.text.resources
+C:\Users\User\source\repos\NoteBook\Notebook v3\obj\Debug\Notebook.csproj.GenerateResource.Cache
+C:\Users\User\source\repos\NoteBook\Notebook v3\bin\Debug\ru\Notebook v3.resources.dll
+C:\Users\User\source\repos\NoteBook\Notebook v3\obj\Debug\Notebook_v3.Properties.text.ru.resources
+C:\Users\User\source\repos\NoteBook\Notebook v3\obj\Debug\ru\Notebook v3.resources.dll

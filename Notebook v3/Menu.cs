@@ -51,14 +51,14 @@ namespace Notebook
             Console.WriteLine(currMenu.Text + ":");
 
             currMenu.ForEeach((item, n) => Console.WriteLine($"{n + 1}. {item.Text}"));
-            Console.WriteLine($"{currMenu.Children.Count + 1}. Exit");
+            Console.WriteLine($"{currMenu.Children.Count + 1}. " + Notebook_v3.Properties.text.Exit);
 
             int index;
-            Console.Write("Item number: ");
+            Console.Write(Notebook_v3.Properties.text.Number_item + ": ");
             while (!int.TryParse(Console.ReadLine(), out index) || index < 1 || index > currMenu.Children.Count + 1)
             {
-                Console.WriteLine("Invalid number!");
-                Console.Write("Item number: ");
+                Console.WriteLine(Notebook_v3.Properties.text.Invalid_number);
+                Console.Write(Notebook_v3.Properties.text.Number_item + ": ");
             }
 
             return index > currMenu.Children.Count ? null : currMenu.Children[index - 1];

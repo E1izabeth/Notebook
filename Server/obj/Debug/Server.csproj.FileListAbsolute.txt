@@ -6,7 +6,5 @@ C:\Users\User\source\repos\NoteBook\Server\obj\Debug\Server.dll
 C:\Users\User\source\repos\NoteBook\Server\obj\Debug\Server.pdb
 C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Notebook.Impl.dll
 C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Notebook.Interfaces.dll
-C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Client.dll
 C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Notebook.Impl.pdb
 C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Notebook.Interfaces.pdb
-C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Client.pdb

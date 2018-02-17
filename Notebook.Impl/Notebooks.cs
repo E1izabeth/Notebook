@@ -10,14 +10,9 @@ namespace Notebook.Impl
 {
     public static class Notebooks
     {
-        public static INotebook CreateLocalNotebook()
+        public static INotebookLocal CreateLocalNotebook()
         {
             return new NotebookImpl();
-        }
-
-        public static INotebook CreateRemoteNotebook(int port)
-        {
-            return new Client.Client(port);
         }
     }
 }

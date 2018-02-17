@@ -22,5 +22,3 @@ C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Impl.dll
 C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Impl.pdb
 C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Interfaces.dll
 C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Interfaces.pdb
-C:\Users\User\source\repos\NoteBook\Notebook.Impl\bin\Debug\Client.dll
-C:\Users\User\source\repos\NoteBook\Notebook.Impl\bin\Debug\Client.pdb

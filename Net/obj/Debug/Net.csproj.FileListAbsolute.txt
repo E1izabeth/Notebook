@@ -9,6 +9,5 @@ C:\Users\User\source\repos\NoteBook\Net\obj\Debug\Net.exe
 C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Server.dll
 C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Server.pdb
 C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Notebook.Impl.dll
-C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Client.dll
 C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Notebook.Impl.pdb
-C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Client.pdb
+C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Net.exe.config

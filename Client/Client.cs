@@ -11,146 +11,256 @@ using System.Xml.Linq;
 using System.Net.Http;
 using System.Net;
 using System.Collections.Specialized;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting;
+using System.Collections;
+using System.Runtime.Serialization.Formatters;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Description;
 
 namespace Client
 {
-    public class Client : INotebook
+    public class Client : INotebookLocal
     {
-        private string Url { get; }
+        private string ServiceUrl { get; }
+        private string Namespace { get; }
         private XmlNamespaceManager NamespaceManager { get; }
 
         public Client(int port)
         {
-            this.Url = String.Format(@"http://127.0.0.1:{0}/", port);
+            this.Namespace = @"http://schemas.xml/";
+            this.NamespaceManager = new XmlNamespaceManager(new NameTable());
+            this.NamespaceManager.AddNamespace("x", this.Namespace);
+            this.ServiceUrl = String.Format(@"http://127.0.0.1:{0}/", port);
         }
 
-        private string Agent(string type, NameValueCollection request)
+        public static INotebook SvcClient(int port)
+        {
+            var clientChannel = new TcpChannel();
+            ChannelServices.RegisterChannel(clientChannel, false);
+
+            return (INotebook)Activator.GetObject(typeof(INotebook), "tcp://127.0.0.1:9090/RemoteObject.rem");
+        }
+
+        public static INotebook WCFclient()
+        {
+            ChannelFactory<INotebook> factory = new ChannelFactory<INotebook>(new WebHttpBinding() {
+            }, new EndpointAddress(@"http://127.0.0.1:9091/Notebook/"));
+            factory.Endpoint.Behaviors.Add(new WebHttpBehavior() {
+            });
+            INotebook proxy = factory.CreateChannel();
+            return proxy;
+        }
+
+        private void Send(XElement elem)
         {
             try
             {
-                using (var client = new WebClient())
-                {
-                    client.Encoding = Encoding.UTF8;
-                    var ans = client.UploadValues(String.Format("{0}{1}", this.Url, type), request);
-                    return Encoding.UTF8.GetString(ans);
-                }
+                XDocument xDoc = new XDocument(
+                    new XDeclaration("1.0", "utf8", ""),
+                    new XElement(
+                            elem
+                        )
+                );
+
+                var str = xDoc.ToString();
+
+
+
+                //this.Socket.Send(Encoding.UTF8.GetBytes(str));
+
+                //using (NetworkStream stream = new NetworkStream(this.Socket))
+                //{
+                //    XmlWriterSettings settings = new XmlWriterSettings {
+                //        Encoding = Encoding.UTF8,
+                //        OmitXmlDeclaration = true
+                //    };
+                //    using (XmlWriter writer = XmlWriter.Create(stream, settings))
+                //    {
+                //        xDoc.Save(writer);
+                //    }
+                //}
 
             }
             catch (SocketException ex)
             {
                 Debug.Print(ex.ToString());
             }
-            return null;
+        }
+
+        private int RecieveCount()
+        {
+            var data = new byte[1];
+            StringBuilder builder = new StringBuilder();
+            //int bytes = 0;
+            //do
+            //{
+            //    bytes = this.Socket.Receive(data, data.Length, 0);
+            //    builder.Append(Encoding.UTF8.GetString(data, 0, bytes));
+            //}
+            //while (this.Socket.Available > 0 && !builder.ToString().Contains("</Envelope>"));
+            //XmlDocument xDoc = new XmlDocument();
+            //XmlReaderSettings settings = new XmlReaderSettings();
+            //using (NetworkStream stream = new NetworkStream(this.Socket))
+            //using (XmlReader reader = XmlReader.Create(stream, settings))
+            //{
+            //    xDoc.Load(reader);
+            //}
+
+            return ParseXMlCount(builder.ToString());
+        }
+
+        private List<IContactInfo> RecieveContacts()
+        {
+            var data = new byte[1];
+            StringBuilder builder = new StringBuilder();
+            //int bytes = 0;
+            //do
+            //{
+            //    bytes = this.Socket.Receive(data, data.Length, 0);
+            //    builder.Append(Encoding.UTF8.
+            //         GetString(data, 0, bytes));
+            //}
+            //while (this.Socket.Available > 0 && !builder.ToString().Contains("</Envelope>"));
+            //XmlDocument xDoc = new XmlDocument();
+            //XmlReaderSettings settings = new XmlReaderSettings();
+            //using (NetworkStream stream = new NetworkStream(this.Socket))
+            //using (var reader = new StreamReader(stream))
+            //{
+            //    xDoc.Load(reader);
+            //}
+
+            return ParseXMlContacts(builder.ToString());
+        }
+
+        private int ParseXMlCount(string xmlString)
+        {
+            int obj = -1;
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.LoadXml(xmlString);
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNode node = xRoot.SelectSingleNode("//x:answer", this.NamespaceManager);
+            if (node.FirstChild.Name == "count")
+            {
+                obj = Int32.Parse(node.FirstChild.InnerText);
+            }
+            return obj;
+        }
+
+        private List<IContactInfo> ParseXMlContacts(string xmlString)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.LoadXml(xmlString);
+            XmlElement xRoot = xDoc.DocumentElement;
+            XmlNode node = xRoot.SelectSingleNode("//x:answer", this.NamespaceManager);
+
+            List<IContactInfo> obj = new List<IContactInfo>();
+
+            if (node.FirstChild.Name == "contacts")
+            {
+                foreach (XmlNode contact in node.FirstChild)
+                {
+                    var cnt = new ContactInfo();
+                    foreach (XmlNode info in contact)
+                    {
+                        switch (info.Name)
+                        {
+                            case "n":
+                                {
+                                    cnt.FirstName = info.InnerText;
+                                    break;
+                                }
+                            case "fn":
+                                {
+                                    cnt.LastName = info.InnerText;
+                                    break;
+                                }
+                            case "nick":
+                                {
+                                    cnt.Nickname = info.InnerText;
+                                    break;
+                                }
+                            case "bday":
+                                {
+                                    cnt.Birthday = info.InnerText;
+                                    break;
+                                }
+                            case "tel":
+                                {
+                                    cnt.Phone = info.InnerText;
+                                    break;
+                                }
+                            case "email":
+                                {
+                                    cnt.Email = info.InnerText;
+                                    break;
+                                }
+                            case "mailer":
+                                {
+                                    cnt.Mailer = info.InnerText;
+                                    break;
+                                }
+                            case "note":
+                                {
+                                    cnt.Note = info.InnerText;
+                                    break;
+                                }
+                            default:
+                                break;
+                        }
+                    }
+                    obj.Add(cnt);
+                }
+            }
+            return obj;
         }
 
         public int Count()
         {
-            return RecievedCount(Agent("count", new NameValueCollection()));
-        }
-
-        private int RecievedCount(string answer)
-        {
-            var info = answer.Split(':');
-            if (info[0] == "count")
-                return Int32.Parse(info[1]);
-            else
-                return 0; //?
+            Send(new XElement(XName.Get("request", this.Namespace), "count"));
+            return RecieveCount();
         }
 
         public IEnumerable<IContactInfo> GetContacts()
         {
-            return RecieveContacts(Agent("allcontacts", new NameValueCollection())).ToList();
-        }
-
-        private IEnumerable<IContactInfo> RecieveContacts(string answer)
-        {
-            List<IContactInfo> contactsList = new List<IContactInfo>();
-            string[] infos = answer.Split('\n');
-            for (int i = 0; i < infos.Length - 1; )
-            {
-                var cnt = new ContactInfo();
-                do
-                {
-                    var subpair = infos[i].Split(':');
-                    switch (subpair[0])
-                    {
-                        case "n":
-                            {
-                                cnt.FirstName = subpair[1];
-                                break;
-                            }
-                        case "fn":
-                            {
-                                cnt.LastName = subpair[1];
-                                break;
-                            }
-                        case "nick":
-                            {
-                                cnt.Nickname = subpair[1];
-                                break;
-                            }
-                        case "bday":
-                            {
-                                cnt.Birthday = subpair[1];
-                                break;
-                            }
-                        case "tel":
-                            {
-                                cnt.Phone = subpair[1];
-                                break;
-                            }
-                        case "email":
-                            {
-                                cnt.Email = subpair[1].Replace("%40", "@");
-                                break;
-                            }
-                        case "mailer":
-                            {
-                                cnt.Mailer = subpair[1];
-                                break;
-                            }
-                        case "note":
-                            {
-                                cnt.Note = subpair[1];
-                                break;
-                            }
-                        default:
-                            break;
-                    }
-                    ++i;
-                }
-                while (i % 8 != 0);
-                contactsList.Add(cnt);
-            }
-
-            return contactsList;
+            Send(new XElement(XName.Get("request", this.Namespace), "allcontacts"));
+            return RecieveContacts().ToList();
         }
 
         public IEnumerable<IContactInfo> GetContacts(SearchSpec spec)
         {
-            var pars = new NameValueCollection();
-            pars.Add(spec.Conditions.First().GetType().ToString(), spec.Conditions.First().Text);
-            if (spec.Conditions.Count > 1)
-            {
-                pars.Add(spec.Conditions.ElementAt(1).GetType().ToString(), spec.Conditions.ElementAt(1).Text);
-            }
+            Send(new XElement(XName.Get("request", this.Namespace),
+                new XElement(XName.Get("search", this.Namespace),
+                    new XElement(XName.Get(spec.Conditions.First().GetType().ToString(), this.Namespace), spec.Conditions.First().Text),
+                    spec.Conditions.Count == 1 ? null : new XElement(XName.Get(spec.Conditions.First().GetType().ToString(), this.Namespace), spec.Conditions.First().Text)
+                    )
+                )
+            );
 
-            return RecieveContacts(Agent("search", pars)).ToList();
+            return RecieveContacts().ToList();
         }
 
-        public void NewElement(IContactInfo cnt)
+        public void NewElement(IContactInfo contact)
         {
-            var pars = new NameValueCollection {
-                { "n", cnt.FirstName },
-                { "fn", cnt.LastName },
-                { "nick", cnt.Nickname },
-                { "bday", cnt.Birthday },
-                { "tel", cnt.Phone },
-                { "email", cnt.Email },
-                { "mailer", cnt.Mailer },
-                { "note", cnt.Note }
-            };
-            Agent("save", pars);
+            Send(new XElement(XName.Get("request", this.Namespace),
+                new XElement(XName.Get("save", this.Namespace),
+                    new XElement(XName.Get("contact", this.Namespace),
+                        new XElement(XName.Get("n", this.Namespace), contact.FirstName),
+                        new XElement(XName.Get("fn", this.Namespace), contact.LastName),
+                        new XElement(XName.Get("nick", this.Namespace), contact.Nickname),
+                        new XElement(XName.Get("bday", this.Namespace), contact.Birthday),
+                        new XElement(XName.Get("tel", this.Namespace), contact.Phone),
+                        new XElement(XName.Get("email", this.Namespace), contact.Email),
+                        new XElement(XName.Get("mailer", this.Namespace), contact.Mailer),
+                        new XElement(XName.Get("note", this.Namespace), contact.Note)
+                        )
+                    )
+                )
+           );
         }
     }
 }

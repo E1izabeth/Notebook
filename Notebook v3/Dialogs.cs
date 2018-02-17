@@ -9,26 +9,25 @@ namespace Notebook
 {
     class Dialogs
     {
-        public IContactInfo AddNew()
+        public ContactInfo AddNew()
         {
             ContactInfo note = new ContactInfo();
-            //Console.Clear();
-            Console.WriteLine("New contact:");
-            if ((note.FirstName = ReadProp("First Name: ", "Invalid first name!", ValidName)) == null)
+            Console.WriteLine(Notebook_v3.Properties.text.New_contact);
+            if ((note.FirstName = ReadProp(Notebook_v3.Properties.text.First_name + ": ", Notebook_v3.Properties.text.Invalid_first_name, ValidName)) == null)
                 return AddNew();
-            if ((note.LastName = ReadProp("Last Name: ", "Invalid last name!", ValidName)) == null)
+            if ((note.LastName = ReadProp(Notebook_v3.Properties.text.Last_name + ": ", Notebook_v3.Properties.text.Invalid_last_name, ValidName)) == null)
                 return AddNew();
-            if ((note.Nickname = ReadProp("Nickname: ", "Invalid nickname!", ValidName)) == null)
+            if ((note.Nickname = ReadProp(Notebook_v3.Properties.text.Nickname + ": ", Notebook_v3.Properties.text.Invalid_nickname, ValidName)) == null)
                 return AddNew();
-            if ((note.Birthday = ReadProp("Birthday(YYYY-MM-DD): ", "Invalid birthday!", ValidDate)) == null)
+            if ((note.Birthday = ReadProp(Notebook_v3.Properties.text.Birthday + "(YYYY-MM-DD): ", Notebook_v3.Properties.text.Invalid_birthday, ValidDate)) == null)
                 return AddNew();
-            if ((note.Phone = ReadProp("Phone: ", "Invalid phone!", ValidNumber)) == null)
+            if ((note.Phone = ReadProp(Notebook_v3.Properties.text.Phone + ": ", Notebook_v3.Properties.text.Invalid_phone, ValidNumber)) == null)
                 return AddNew();
-            if ((note.Email = ReadProp("E-mail: ", "Invalid email!", ValidEmail)) == null)
+            if ((note.Email = ReadProp(Notebook_v3.Properties.text.Email+ ": ", Notebook_v3.Properties.text.Invalid_email, ValidEmail)) == null)
                 return AddNew();
-            if ((note.Mailer = ReadProp("Mailer: ", "", ValidAlways)) == null)
+            if ((note.Mailer = ReadProp(Notebook_v3.Properties.text.Mailer + ": ", "", ValidAlways)) == null)
                 return AddNew();
-            if ((note.Note = ReadProp("Note: ", "", ValidAlways)) == null)
+            if ((note.Note = ReadProp(Notebook_v3.Properties.text.Note + ": ", "", ValidAlways)) == null)
                 return AddNew();
             return note;
         }
@@ -40,7 +39,7 @@ namespace Notebook
             if (!validateAction(value))
             {
                 Console.WriteLine(errMsg);
-                Console.WriteLine("Please, press any button to try again...");
+                Console.WriteLine(Notebook_v3.Properties.text.ButtonAgain);
                 Console.ReadKey();
                 value = null;
             }
@@ -50,25 +49,32 @@ namespace Notebook
 
         public string AskRequest()
         {
-            Console.Write("Request: ");
+            Console.Write(Notebook_v3.Properties.text.Request + ": ");
             string answer = Console.ReadLine();
-            Console.WriteLine("\nSearching...");
+            Console.WriteLine(Notebook_v3.Properties.text.Searching);
             return answer;
         }
 
         public string LoadPath()
         {
-            Console.Write("Please, input path: ");
+            Console.Write(Notebook_v3.Properties.text.InputPath + ": ");
             string _path = Console.ReadLine();
             return _path;
         }
 
         public void PrintSelection(List<IContactInfo> book)
         {
-            //Console.Clear();
-            Console.WriteLine("Results(" + book.Count + ")");
+            Console.WriteLine(Notebook_v3.Properties.text.Results + "(" + book.Count + ")");
             this.PrintCollectionImpl(book);
-            Console.WriteLine("Press any button to continue...");
+            Console.WriteLine(Notebook_v3.Properties.text.ButtonContinue);
+            Console.ReadKey();
+        }
+
+        public void PrintSelection(IContactInfo[] book)
+        {
+            Console.WriteLine(Notebook_v3.Properties.text.Results + "(" + book.Count() + ")");
+            this.PrintCollectionImpl(book.ToList<IContactInfo>());
+            Console.WriteLine(Notebook_v3.Properties.text.ButtonContinue);
             Console.ReadKey();
         }
 
@@ -78,17 +84,17 @@ namespace Notebook
             foreach (IContactInfo tmp in contacts)
             {
                 i += 1;
-                Console.Write("#" + i + "\tName: " + tmp.FirstName + "\n");
-                Console.WriteLine("\tSurname: " + tmp.LastName);
-                Console.WriteLine("\tNickname: " + tmp.Nickname);
-                Console.WriteLine("\tBirthday: " + tmp.Birthday);
-                Console.WriteLine("\tPhone: " + tmp.Phone);
-                Console.WriteLine("\tE-mail: " + tmp.Email);
-                Console.WriteLine("\tMailer: " + tmp.Mailer);
-                Console.WriteLine("\tNote: " + tmp.Note);
+                Console.Write("#" + i + "\t" + Notebook_v3.Properties.text.First_name + ": " + tmp.FirstName + "\n");
+                Console.WriteLine("\t" + Notebook_v3.Properties.text.Last_name + ": " + tmp.LastName);
+                Console.WriteLine("\t" + Notebook_v3.Properties.text.Nickname + ": " + tmp.Nickname);
+                Console.WriteLine("\t" + Notebook_v3.Properties.text.Birthday + ": " + tmp.Birthday);
+                Console.WriteLine("\t" + Notebook_v3.Properties.text.Phone + ": " + tmp.Phone);
+                Console.WriteLine("\t" + Notebook_v3.Properties.text.Email + ": " + tmp.Email);
+                Console.WriteLine("\t" + Notebook_v3.Properties.text.Mailer + ": " + tmp.Mailer);
+                Console.WriteLine("\t" + Notebook_v3.Properties.text.Note + ": " + tmp.Note);
             }
             if (contacts.Count == 0)
-                Console.WriteLine("No contacts");
+                Console.WriteLine(Notebook_v3.Properties.text.No_contacts);
         }
 
         public static bool ValidAlways(string str)
@@ -128,7 +134,7 @@ namespace Notebook
         public static bool ValidName(string name)
         {
             foreach (char letter in name)
-                if (letter > 'z' || letter < 'A')
+                if (letter > Notebook_v3.Properties.text.z.ToCharArray().First() || letter < Notebook_v3.Properties.text.A.ToCharArray().First())
                 {
                     return false;
                 }
@@ -137,7 +143,7 @@ namespace Notebook
 
         public static bool ValidEmail(string email)
         {
-            if (email.Contains("@") && (email.Contains(".ru") || email.Contains(".com")))
+            if (/*!email.Contains("%40") &&*/ email.Contains("@") && (email.Contains(".ru") || email.Contains(".com")))
             {
                 return true;
             }

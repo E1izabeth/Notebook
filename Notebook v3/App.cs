@@ -8,6 +8,11 @@ using System.IO;
 using VCard;
 using System.Net.Sockets;
 using System.Net;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.Threading;
+using System.Globalization;
 
 namespace Notebook
 {
@@ -23,14 +28,15 @@ namespace Notebook
 
         void ViewAll()
         {
-            _user.PrintSelection(_book.GetContacts().ToList());
+            var arr = _book.GetContacts();
+            _user.PrintSelection(arr.ToList<IContactInfo>());
         }
 
         void AddNew()
         {
             var NewContact = _user.AddNew();
             _book.NewElement(NewContact);
-            SaveNewContact(NewContact);
+            //SaveNewContact(NewContact);
         }
 
         public void CheckValidPath(string path)
@@ -42,7 +48,7 @@ namespace Notebook
                 LoadNew();
             }
         }
-        
+
         void LoadNew()
         {
             string path = _user.LoadPath();
@@ -73,7 +79,8 @@ namespace Notebook
                             Mailer = entry.Contents.FirstOrDefault(l => l.Name == Names.MAILER)?.Value,
                             Note = entry.Contents.FirstOrDefault(l => l.Name == Names.NOTE)?.Value
                         };
-                        _book.NewElement(contact);
+                         _book.NewElement(contact);
+                        //throw new NotImplementedException("");
                     }
                 }
             }
@@ -84,42 +91,53 @@ namespace Notebook
         {
             string query = _user.AskRequest();
             //Request(Contact => Contact.Name.Contains(query));
-            this.PerformQuery(new ByNameSearchCriteria(query));
+            var contactInfos = _book.GetContacts(specName: new ByNameSearchCriteria(query));
+            _user.PrintSelection(contactInfos);
+            //this.PerformQuery(new ByNameSearchCriteria(query));
         }
 
         void SurnameSearch()
         {
             string query = _user.AskRequest();
             //Request(Contact => Contact.Surname.Contains(query));
-            this.PerformQuery(new BySurnameSearchCriteria(query));
+            var contactInfos = _book.GetContacts(specSurname: new BySurnameSearchCriteria(query));
+            _user.PrintSelection(contactInfos);
+            //this.PerformQuery(new BySurnameSearchCriteria(query));
         }
 
         void PhoneSearch()
         {
             string query = _user.AskRequest();
             //Request(Contact => Contact.Phone.Contains(query));
-            this.PerformQuery(new ByPhoneSearchCriteria(query));
+            var contactInfos = _book.GetContacts(specPhone: new ByPhoneSearchCriteria(query));
+            _user.PrintSelection(contactInfos);
+            //this.PerformQuery(new ByPhoneSearchCriteria(query));
         }
 
         void EmailSearch()
         {
             string query = _user.AskRequest();
             //Request(Contact => Contact.Email.Contains(query));
-            this.PerformQuery(new ByEmailSearchCriteria(query));
+            var contactInfos = _book.GetContacts(specEmail: new ByEmailSearchCriteria(query));
+            _user.PrintSelection(contactInfos);
+            //this.PerformQuery(new ByEmailSearchCriteria(query));
         }
 
         void NameSurnameSearch()
         {
             string query = _user.AskRequest();
             //Request(Contact => Contact.Name.Contains(query) || Contact.Surname.Contains(query));
-            this.PerformQuery(new ByNameSearchCriteria(query), new BySurnameSearchCriteria(query));
+            var contactInfos = _book.GetContacts(specName: new ByNameSearchCriteria(query), specSurname: new BySurnameSearchCriteria(query));
+            _user.PrintSelection(contactInfos);
+            //this.PerformQuery(new ByNameSearchCriteria(query), new BySurnameSearchCriteria(query));
         }
 
-        void PerformQuery(params SearchCriteria[] args)
-        {
-            _user.PrintSelection(_book.GetContacts(new SearchSpec(args)).ToList());
-        }
-
+        //void PerformQuery(params SearchCriteria[] args)
+        //{
+        //    var searchParams = new SearchSpec(args);
+        //    var contactInfos = _book.GetContacts(searchParams);
+        //    _user.PrintSelection(contactInfos);
+        //}
 
         /*void Request(Predicate<Contact> Selection)
         {
@@ -128,21 +146,29 @@ namespace Notebook
 
         static void Main(string[] argc)
         {
-            var app = new App(Notebook.Impl.Notebooks.CreateRemoteNotebook(Int32.Parse(argc[0])));
+            
+            AppDomain.CurrentDomain.FirstChanceException += (sender, ea) => {
+                System.Diagnostics.Debug.Print(System.Diagnostics.Process.GetCurrentProcess().ProcessName + ": " + ea.Exception.ToString());
+            };
+
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("ru-RU");
+            //var app = new App(Client.Client.SvcClient(Int32.Parse(argc[0])));
+            //var app = new App(new Client.Client(Int32.Parse(argc[0])));
+            var app = new App(Client.Client.WCFclient());
 
             var menu = new Menu(
-                new MenuItem("Menu") {
-                    new MenuItem("View all", app.ViewAll),                                      
-                    new MenuItem("Load new", app.LoadNew),
-                    new MenuItem("Add New", app.AddNew ),                                      
-                    new MenuItem("Search") {
-                        new MenuItem("By name", app.NameSearch),
-                        new MenuItem("By surname", app.SurnameSearch),
-                        new MenuItem("Be name and surname", app.NameSurnameSearch),
-                        new MenuItem("By phone", app.PhoneSearch),
-                        new MenuItem("By E-mail", app.EmailSearch),
+                new MenuItem(Notebook_v3.Properties.text.Menu) {
+                    new MenuItem(Notebook_v3.Properties.text.View_all, app.ViewAll),
+                    new MenuItem(Notebook_v3.Properties.text.Load_new, app.LoadNew),
+                    new MenuItem(Notebook_v3.Properties.text.Add_new, app.AddNew ),
+                    new MenuItem(Notebook_v3.Properties.text.Search) {
+                        new MenuItem(Notebook_v3.Properties.text.By_name, app.NameSearch),
+                        new MenuItem(Notebook_v3.Properties.text.By_surname, app.SurnameSearch),
+                        new MenuItem(Notebook_v3.Properties.text.By_name_surname, app.NameSurnameSearch),
+                        new MenuItem(Notebook_v3.Properties.text.By_phone, app.PhoneSearch),
+                        new MenuItem(Notebook_v3.Properties.text.By_email, app.EmailSearch),
                     },
-                    new MenuItem("Upload All", app.SaveAllContacts)
+                    new MenuItem(Notebook_v3.Properties.text.Upload_all, app.SaveAllContacts)
                 }
             );
 

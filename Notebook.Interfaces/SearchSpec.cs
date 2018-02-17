@@ -17,8 +17,10 @@ namespace Notebook.Interfaces
     }
 
     [Serializable]
+    [DataContract]
     public abstract class SearchCriteria
     {
+        [DataMember]
         public string Text { get; private set; }
 
         public SearchCriteria(string text)
@@ -35,6 +37,7 @@ namespace Notebook.Interfaces
     }
 
     [Serializable]
+    [DataContract]
     public class ByNameSearchCriteria : SearchCriteria
     {
         public ByNameSearchCriteria(string text)
@@ -47,6 +50,7 @@ namespace Notebook.Interfaces
     }
 
     [Serializable]
+    [DataContract]
     public class BySurnameSearchCriteria : SearchCriteria
     {
         public BySurnameSearchCriteria(string text)
@@ -59,6 +63,7 @@ namespace Notebook.Interfaces
     }
 
     [Serializable]
+    [DataContract]
     public class ByPhoneSearchCriteria : SearchCriteria
     {
         public ByPhoneSearchCriteria(string text)
@@ -71,6 +76,7 @@ namespace Notebook.Interfaces
     }
 
     [Serializable]
+    [DataContract]
     public class ByEmailSearchCriteria : SearchCriteria
     {
         public ByEmailSearchCriteria(string text)
@@ -83,8 +89,10 @@ namespace Notebook.Interfaces
     }
 
     [Serializable]
+    [DataContract]
     public class SearchSpec
     {
+        [DataMember]
         public ReadOnlyCollection<SearchCriteria> Conditions { get; private set; }
 
         public SearchSpec(params SearchCriteria[] conds)

@@ -35,6 +35,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,10 +51,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Notebook.Impl\Notebook.Impl.csproj">
+      <Project>{183E12EC-BD0A-4FAF-9F14-3D72E633CF66}</Project>
+      <Name>Notebook.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Notebook.Interfaces\Notebook.Interfaces.csproj">
+      <Project>{39B7084C-99DF-4426-B0DB-99F4C6246D2F}</Project>
+      <Name>Notebook.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{f6da76e4-12bd-4155-ba94-bd910a41989e}</Project>
       <Name>Server</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

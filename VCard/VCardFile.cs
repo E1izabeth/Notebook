@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace VCard
 {
-    public class Names
+    public static class Names
     {
         public const string VERSION = "VERSION";
         public const string N = "N";
