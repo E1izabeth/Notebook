@@ -11,3 +11,17 @@ C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Server.pdb
 C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Notebook.Impl.dll
 C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Notebook.Impl.pdb
 C:\Users\User\source\repos\NoteBook\Net\bin\Debug\Net.exe.config
+D:\MyProjects\notebook\Net\bin\Debug\Net.exe.config
+D:\MyProjects\notebook\Net\bin\Debug\Net.exe
+D:\MyProjects\notebook\Net\bin\Debug\Net.pdb
+D:\MyProjects\notebook\Net\bin\Debug\Notebook.Impl.dll
+D:\MyProjects\notebook\Net\bin\Debug\Notebook.Interfaces.dll
+D:\MyProjects\notebook\Net\bin\Debug\Server.dll
+D:\MyProjects\notebook\Net\bin\Debug\Notebook.Impl.pdb
+D:\MyProjects\notebook\Net\bin\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Net\bin\Debug\Server.pdb
+D:\MyProjects\notebook\Net\obj\Debug\Net.csprojResolveAssemblyReference.cache
+D:\MyProjects\notebook\Net\obj\Debug\Net.csproj.CoreCompileInputs.cache
+D:\MyProjects\notebook\Net\obj\Debug\Net.csproj.CopyComplete
+D:\MyProjects\notebook\Net\obj\Debug\Net.exe
+D:\MyProjects\notebook\Net\obj\Debug\Net.pdb

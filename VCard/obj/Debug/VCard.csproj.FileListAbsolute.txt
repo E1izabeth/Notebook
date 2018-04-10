@@ -10,3 +10,9 @@ C:\Users\User\source\repos\NoteBook\VCard\obj\Debug\VCard.csprojResolveAssemblyR
 C:\Users\User\source\repos\NoteBook\VCard\obj\Debug\VCard.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\NoteBook\VCard\obj\Debug\VCard.dll
 C:\Users\User\source\repos\NoteBook\VCard\obj\Debug\VCard.pdb
+D:\MyProjects\notebook\VCard\bin\Debug\VCard.dll
+D:\MyProjects\notebook\VCard\bin\Debug\VCard.pdb
+D:\MyProjects\notebook\VCard\obj\Debug\VCard.csprojResolveAssemblyReference.cache
+D:\MyProjects\notebook\VCard\obj\Debug\VCard.csproj.CoreCompileInputs.cache
+D:\MyProjects\notebook\VCard\obj\Debug\VCard.dll
+D:\MyProjects\notebook\VCard\obj\Debug\VCard.pdb

@@ -6,3 +6,12 @@ C:\Users\User\source\repos\NoteBook\Client\obj\Debug\Client.csprojResolveAssembl
 C:\Users\User\source\repos\NoteBook\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\NoteBook\Client\obj\Debug\Client.dll
 C:\Users\User\source\repos\NoteBook\Client\obj\Debug\Client.pdb
+D:\MyProjects\notebook\Client\bin\Debug\Client.dll
+D:\MyProjects\notebook\Client\bin\Debug\Client.pdb
+D:\MyProjects\notebook\Client\bin\Debug\Notebook.Interfaces.dll
+D:\MyProjects\notebook\Client\bin\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+D:\MyProjects\notebook\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+D:\MyProjects\notebook\Client\obj\Debug\Client.csproj.CopyComplete
+D:\MyProjects\notebook\Client\obj\Debug\Client.dll
+D:\MyProjects\notebook\Client\obj\Debug\Client.pdb

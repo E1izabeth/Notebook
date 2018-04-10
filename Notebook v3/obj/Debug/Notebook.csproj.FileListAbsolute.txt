@@ -16,3 +16,22 @@ C:\Users\User\source\repos\NoteBook\Notebook v3\obj\Debug\Notebook.csproj.Genera
 C:\Users\User\source\repos\NoteBook\Notebook v3\bin\Debug\ru\Notebook v3.resources.dll
 C:\Users\User\source\repos\NoteBook\Notebook v3\obj\Debug\Notebook_v3.Properties.text.ru.resources
 C:\Users\User\source\repos\NoteBook\Notebook v3\obj\Debug\ru\Notebook v3.resources.dll
+D:\MyProjects\notebook\Notebook v3\bin\Debug\Notebook v3.exe.config
+D:\MyProjects\notebook\Notebook v3\bin\Debug\Notebook v3.exe
+D:\MyProjects\notebook\Notebook v3\bin\Debug\Notebook v3.pdb
+D:\MyProjects\notebook\Notebook v3\bin\Debug\ru\Notebook v3.resources.dll
+D:\MyProjects\notebook\Notebook v3\bin\Debug\Client.dll
+D:\MyProjects\notebook\Notebook v3\bin\Debug\Notebook.Interfaces.dll
+D:\MyProjects\notebook\Notebook v3\bin\Debug\VCard.dll
+D:\MyProjects\notebook\Notebook v3\bin\Debug\Client.pdb
+D:\MyProjects\notebook\Notebook v3\bin\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Notebook v3\bin\Debug\VCard.pdb
+D:\MyProjects\notebook\Notebook v3\obj\Debug\Notebook.csprojResolveAssemblyReference.cache
+D:\MyProjects\notebook\Notebook v3\obj\Debug\Notebook_v3.Properties.text.resources
+D:\MyProjects\notebook\Notebook v3\obj\Debug\Notebook_v3.Properties.text.ru.resources
+D:\MyProjects\notebook\Notebook v3\obj\Debug\Notebook.csproj.GenerateResource.cache
+D:\MyProjects\notebook\Notebook v3\obj\Debug\Notebook.csproj.CoreCompileInputs.cache
+D:\MyProjects\notebook\Notebook v3\obj\Debug\ru\Notebook v3.resources.dll
+D:\MyProjects\notebook\Notebook v3\obj\Debug\Notebook.csproj.CopyComplete
+D:\MyProjects\notebook\Notebook v3\obj\Debug\Notebook v3.exe
+D:\MyProjects\notebook\Notebook v3\obj\Debug\Notebook v3.pdb

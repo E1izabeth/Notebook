@@ -22,3 +22,12 @@ C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Impl.dll
 C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Impl.pdb
 C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Interfaces.dll
 C:\Users\User\source\repos\Notebook\Notebook.Impl\bin\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Notebook.Impl\bin\Debug\Notebook.Impl.dll
+D:\MyProjects\notebook\Notebook.Impl\bin\Debug\Notebook.Impl.pdb
+D:\MyProjects\notebook\Notebook.Impl\bin\Debug\Notebook.Interfaces.dll
+D:\MyProjects\notebook\Notebook.Impl\bin\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Notebook.Impl\obj\Debug\Notebook.Impl.csprojResolveAssemblyReference.cache
+D:\MyProjects\notebook\Notebook.Impl\obj\Debug\Notebook.Impl.csproj.CoreCompileInputs.cache
+D:\MyProjects\notebook\Notebook.Impl\obj\Debug\Notebook.Impl.csproj.CopyComplete
+D:\MyProjects\notebook\Notebook.Impl\obj\Debug\Notebook.Impl.dll
+D:\MyProjects\notebook\Notebook.Impl\obj\Debug\Notebook.Impl.pdb

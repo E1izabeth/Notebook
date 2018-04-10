@@ -16,3 +16,9 @@ C:\Users\User\source\repos\NoteBook\Notebook.Interfaces\obj\Debug\Notebook.Inter
 C:\Users\User\source\repos\NoteBook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\NoteBook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.dll
 C:\Users\User\source\repos\NoteBook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Notebook.Interfaces\bin\Debug\Notebook.Interfaces.dll
+D:\MyProjects\notebook\Notebook.Interfaces\bin\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.csprojResolveAssemblyReference.cache
+D:\MyProjects\notebook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.csproj.CoreCompileInputs.cache
+D:\MyProjects\notebook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.dll
+D:\MyProjects\notebook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.pdb

@@ -8,3 +8,14 @@ C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Notebook.Impl.dll
 C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Notebook.Interfaces.dll
 C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Notebook.Impl.pdb
 C:\Users\User\source\repos\NoteBook\Server\bin\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Server\bin\Debug\Server.dll
+D:\MyProjects\notebook\Server\bin\Debug\Server.pdb
+D:\MyProjects\notebook\Server\bin\Debug\Notebook.Impl.dll
+D:\MyProjects\notebook\Server\bin\Debug\Notebook.Interfaces.dll
+D:\MyProjects\notebook\Server\bin\Debug\Notebook.Impl.pdb
+D:\MyProjects\notebook\Server\bin\Debug\Notebook.Interfaces.pdb
+D:\MyProjects\notebook\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+D:\MyProjects\notebook\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+D:\MyProjects\notebook\Server\obj\Debug\Server.csproj.CopyComplete
+D:\MyProjects\notebook\Server\obj\Debug\Server.dll
+D:\MyProjects\notebook\Server\obj\Debug\Server.pdb
