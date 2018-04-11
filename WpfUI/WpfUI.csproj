@@ -104,5 +104,8 @@
     <Resource Include="Resources\008-group.png" />
     <Resource Include="Resources\new.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\magnifier.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
