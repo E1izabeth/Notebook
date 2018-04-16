@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -68,6 +69,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,6 +108,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\magnifier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{36228f43-a4a6-49dd-abb0-a0c68ebb5076}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Notebook v3\Notebook.csproj">
+      <Project>{a54d722a-8da5-4371-a5f6-202e7fbb3b35}</Project>
+      <Name>Notebook</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Notebook.Interfaces\Notebook.Interfaces.csproj">
+      <Project>{39B7084C-99DF-4426-B0DB-99F4C6246D2F}</Project>
+      <Name>Notebook.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VCard\VCard.csproj">
+      <Project>{07D02F4D-EF0F-4BEA-AA12-3BB9AEF73E12}</Project>
+      <Name>VCard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

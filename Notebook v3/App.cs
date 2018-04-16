@@ -52,6 +52,7 @@ namespace Notebook
         void LoadNew()
         {
             string path = _user.LoadPath();
+            
             CheckValidPath(path);
             using (var stream = File.OpenRead(path))
             {

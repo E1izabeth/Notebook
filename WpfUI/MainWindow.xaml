@@ -38,22 +38,40 @@
             </DockPanel.Resources>
 
 
-            <Grid DockPanel.Dock="Top" Name="grdSearchPanel" >
-                <!--<Grid.Resources>
-                <Style TargetType="Grid">
-                    <Setter Property="MaxHeight" Value="0" />
-                </Style>
-            </Grid.Resources>-->
+            <Grid DockPanel.Dock="Top" Name="grdSearchPanel" MaxHeight="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" />
-                <Button Grid.Column="2" Content="Search" Name="btnX" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Column="0" Grid.Row="0"  Name="txtbSearch" />
+                <Button Grid.Column="2" Grid.Row="0" Content="Search" Name="btnSearch" Click="BtnSearch_Click">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard Name="stbHideSearch">
+                                <Storyboard>
+                                    <DoubleAnimation From="500" To="0"
+                                                             Storyboard.Target="{x:Reference Name=grdSearchPanel}"
+                                                             Storyboard.TargetProperty="MaxHeight" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+                <StackPanel Grid.Column="0" Grid.Row="2">
+                    <CheckBox Name="chbByName" Content="ByName" />
+                    <CheckBox Name="chbBySurname" Content="BySurname"/>
+                    <CheckBox Name="chbByPhone" Content="ByPhone" />
+                    <CheckBox Name="chbByEmail" Content="ByEmail" />
+                </StackPanel>
             </Grid>
-
-            <Grid DockPanel.Dock="Right" Margin="5">
+ 
+            <Grid DockPanel.Dock="Right" Name="grdAddContactPanel" Margin="5" MaxWidth="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -105,12 +123,25 @@
                 <TextBox Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2"/>
 
 
-                <Button Grid.Column="1" Grid.Row="16" Grid.ColumnSpan="2" Content="Button" />
+                <Button Grid.Column="1" Grid.Row="16" Grid.ColumnSpan="2" Content="Save" >
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard Name="stbHideAddContact">
+                                <Storyboard>
+                                    <DoubleAnimation From="500" To="0"
+                                                         Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
+                                                         Storyboard.TargetProperty="MaxWidth" >
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
 
             </Grid>
 
             <Grid>
-                <ListBox Name="ContactsList" Margin="5"></ListBox>
+                <ListBox Name="lbContactsList" Margin="5"></ListBox>
             </Grid>
         </DockPanel>
 
@@ -122,36 +153,50 @@
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
 
-                <MenuItem Name="mnuView" Header="View" VerticalContentAlignment="Center" VerticalAlignment="Center" ToolTip="View">
+                <MenuItem Name="mnuView" Header="View" VerticalContentAlignment="Center" VerticalAlignment="Bottom" ToolTip="View" Click="MnuView_Click">
                     <MenuItem.Icon>
                         <Image Source="Resources/007-eye.png" HorizontalAlignment="Center"/>
                     </MenuItem.Icon>
+                    <MenuItem.Triggers>
+                        <EventTrigger RoutedEvent="MenuItem.Click">
+                            <BeginStoryboard Name="stbHideSearchFromView">
+                                <Storyboard>
+                                    <DoubleAnimation From="0" To="0"
+                                                         Storyboard.Target="{x:Reference Name=grdSearchPanel}"
+                                                         Storyboard.TargetProperty="MaxHeight" >
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MenuItem.Click">
+                            <BeginStoryboard Name="stbHideAddContactFromView">
+                                <Storyboard>
+                                    <DoubleAnimation From="0" To="0"
+                                                         Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
+                                                         Storyboard.TargetProperty="MaxWidth" >
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </MenuItem.Triggers>
                 </MenuItem>
                 <MenuItem Name="mnuSearch" Header="Search" VerticalContentAlignment="Center" VerticalAlignment="Center" ToolTip="Search"
                           DataContext="{Binding ElementName=grdSearchPanel}">
                     <MenuItem.Icon>
                         <Image Source="Resources/magnifier.png" HorizontalAlignment="Center"/>
                     </MenuItem.Icon>
-                    <MenuItem.Resources>
-                        <Style TargetType="MenuItem">
-                            <Style.Triggers>
-                                <EventTrigger RoutedEvent="MouseDown">
-                                    <BeginStoryboard Name="stbShowSearch">
-                                        <Storyboard>
-                                            <DoubleAnimation From="0" To="500" Duration="0:0:5" 
+                    <MenuItem.Triggers>
+                        <EventTrigger RoutedEvent="MenuItem.Click">
+                            <BeginStoryboard Name="stbShowSearch">
+                                <Storyboard>
+                                    <DoubleAnimation From="0" To="500"
                                                          Storyboard.Target="{x:Reference Name=grdSearchPanel}"
                                                          Storyboard.TargetProperty="MaxHeight" >
-                                            </DoubleAnimation>
-                                            <DoubleAnimation From="0" To="500" Duration="0:0:5" 
-                                                         Storyboard.Target="{x:Reference Name=grdSearchPanel}"
-                                                         Storyboard.TargetProperty="Margin" >
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </MenuItem.Resources>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </MenuItem.Triggers>
                 </MenuItem>
                 <MenuItem Name="mnuNew"  Header="New" ToolTip="New">
                     <MenuItem.Icon>
@@ -161,19 +206,31 @@
                         <MenuItem.Icon>
                             <Image Source="Resources/005-plus.png" HorizontalAlignment="Center"/>
                         </MenuItem.Icon>
+                        <MenuItem.Triggers>
+                            <EventTrigger RoutedEvent="MenuItem.Click">
+                                <BeginStoryboard Name="stbShowAddContact">
+                                    <Storyboard>
+                                        <DoubleAnimation From="0" To="500"
+                                                         Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
+                                                         Storyboard.TargetProperty="MaxWidth" >
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </MenuItem.Triggers>
                     </MenuItem>
-                    <MenuItem Name="mnuLoad"  Header="Load" ToolTip="Load">
+                    <MenuItem Name="mnuLoad"  Header="Load" ToolTip="Load" Click="MnuLoad_Click">
                         <MenuItem.Icon>
                             <Image Source="Resources/004-upload-button.png" HorizontalAlignment="Center"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Name="mnuOpen"  Header="Open" ToolTip="Open">
+                <MenuItem Name="mnuOpen"  Header="Open" ToolTip="Open" Click="MnuOpen_Click">
                     <MenuItem.Icon>
                         <Image Source="Resources/001-arrow.png" HorizontalAlignment="Center"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="mnuSave"  Header="Save" ToolTip="Save">
+                <MenuItem Name="mnuSave"  Header="Save" ToolTip="Save" Click="MnuSave_Click">
                     <MenuItem.Icon>
                         <Image Source="Resources/003-download-symbol.png" HorizontalAlignment="Center"/>
                     </MenuItem.Icon>
