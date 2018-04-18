@@ -52,7 +52,7 @@ namespace Notebook
         void LoadNew()
         {
             string path = _user.LoadPath();
-            
+
             CheckValidPath(path);
             using (var stream = File.OpenRead(path))
             {
@@ -80,7 +80,7 @@ namespace Notebook
                             Mailer = entry.Contents.FirstOrDefault(l => l.Name == Names.MAILER)?.Value,
                             Note = entry.Contents.FirstOrDefault(l => l.Name == Names.NOTE)?.Value
                         };
-                         _book.NewElement(contact);
+                        _book.NewElement(contact);
                         //throw new NotImplementedException("");
                     }
                 }
@@ -147,7 +147,6 @@ namespace Notebook
 
         static void Main(string[] argc)
         {
-            
             AppDomain.CurrentDomain.FirstChanceException += (sender, ea) => {
                 System.Diagnostics.Debug.Print(System.Diagnostics.Process.GetCurrentProcess().ProcessName + ": " + ea.Exception.ToString());
             };

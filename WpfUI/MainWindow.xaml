@@ -1,137 +1,239 @@
-﻿<Window x:Class="WpfUI.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfUI"
-        Background="Lavender" Icon="Resources\008-group.png"
-        Title="Notebook"
-        Height="400" Width="500"
-        MinHeight="200" MinWidth="150">
+﻿<Window
+    x:Class="WpfUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Notebook"
+    Width="500"
+    Height="400"
+    MinWidth="150"
+    MinHeight="200"
+    Background="Lavender"
+    DataContext="{Binding Main, Source={StaticResource Locator}}"
+    Icon="Resources\008-group.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <DockPanel Grid.Column="1">
             <DockPanel.Resources>
                 <Style TargetType="Button">
-                    <Setter Property="MinHeight" Value="24"/>
-                    <Setter Property="MinWidth" Value="75"/>
-                    <Setter Property="HorizontalAlignment" Value="Right"/>
-                    <Setter Property="Focusable" Value="True"/>
+                    <Setter Property="MinHeight" Value="24" />
+                    <Setter Property="MinWidth" Value="75" />
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="Focusable" Value="True" />
                 </Style>
                 <Style TargetType="TextBlock">
-                    <Setter Property="FontStyle" Value="Normal"/>
-                    <Setter Property="FontSize" Value="12"/>
-                    <Setter Property="FontFamily" Value="Arial"/>
+                    <Setter Property="FontStyle" Value="Normal" />
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontFamily" Value="Arial" />
                 </Style>
                 <Style TargetType="MenuItem">
-                    <Setter Property="FontStyle" Value="Normal"/>
-                    <Setter Property="FontSize" Value="12"/>
-                    <Setter Property="FontFamily" Value="Arial"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="FontStyle" Value="Normal" />
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontFamily" Value="Arial" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
                 </Style>
-
             </DockPanel.Resources>
 
 
-            <Grid DockPanel.Dock="Top" Name="grdSearchPanel" MaxHeight="0">
+            <Grid
+                Name="grdSearchPanel"
+                MaxHeight="0"
+                DockPanel.Dock="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBox Grid.Column="0" Grid.Row="0"  Name="txtbSearch" />
-                <Button Grid.Column="2" Grid.Row="0" Content="Search" Name="btnSearch" Click="BtnSearch_Click">
+                <TextBox
+                    Name="txtbSearch"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="{Binding SearchString}" />
+                <Button
+                    Name="btnSearch"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Click="BtnSearch_Click"
+                    Content="Search">
                     <Button.Triggers>
                         <EventTrigger RoutedEvent="Button.Click">
                             <BeginStoryboard Name="stbHideSearch">
                                 <Storyboard>
-                                    <DoubleAnimation From="500" To="0"
-                                                             Storyboard.Target="{x:Reference Name=grdSearchPanel}"
-                                                             Storyboard.TargetProperty="MaxHeight" />
+                                    <DoubleAnimation
+                                        Storyboard.Target="{x:Reference Name=grdSearchPanel}"
+                                        Storyboard.TargetProperty="MaxHeight"
+                                        From="500"
+                                        To="0" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                     </Button.Triggers>
                 </Button>
-                <StackPanel Grid.Column="0" Grid.Row="2">
-                    <CheckBox Name="chbByName" Content="ByName" />
-                    <CheckBox Name="chbBySurname" Content="BySurname"/>
-                    <CheckBox Name="chbByPhone" Content="ByPhone" />
-                    <CheckBox Name="chbByEmail" Content="ByEmail" />
-                </StackPanel>
+                <WrapPanel Grid.Row="2" Grid.Column="0">
+                    <CheckBox
+                        Name="chbByName"
+                        Content="ByName"
+                        IsChecked="{Binding chbByName}" />
+                    <CheckBox
+                        Name="chbBySurname"
+                        Content="BySurname"
+                        IsChecked="{Binding chbBySurname}" />
+                    <CheckBox
+                        Name="chbByPhone"
+                        Content="ByPhone"
+                        IsChecked="{Binding chbByPhone}" />
+                    <CheckBox
+                        Name="chbByEmail"
+                        Content="ByEmail"
+                        IsChecked="{Binding chbByEmail}" />
+                    <Button Margin="0,5,5,5" Content="Clear" />
+                </WrapPanel>
             </Grid>
- 
-            <Grid DockPanel.Dock="Right" Name="grdAddContactPanel" Margin="5" MaxWidth="0">
+
+            <Grid
+                Name="grdAddContactPanel"
+                MaxWidth="0"
+                Margin="5"
+                DockPanel.Dock="Right">
+                <Grid.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="MinWidth" Value="70" />
+                    </Style>
+                </Grid.Resources>
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" MinWidth="70" HorizontalAlignment="Center" Text="Name:" />
-                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Name:" />
+                <TextBox
+                    Name="tbName"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" MinWidth="70" HorizontalAlignment="Center" Text="Surname:" />
-                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="Surname:" />
+                <TextBox
+                    Name="tbSurname"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2" />
 
-                <TextBlock Grid.Row="4" Grid.Column="0" MinWidth="70" HorizontalAlignment="Center" Text="Nickname:" />
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Text="Nickname:" />
+                <TextBox
+                    Name="tbNickname"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2" />
 
-                <TextBlock Grid.Row="6" Grid.Column="0" MinWidth="70" HorizontalAlignment="Center" Text="Birthday:" />
-                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <TextBlock
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Text="Birthday:" />
+                <TextBox
+                    Name="tbBirthday"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2" />
 
-                <TextBlock Grid.Row="8" Grid.Column="0" MinWidth="70" HorizontalAlignment="Center" Text="Phone:" />
-                <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <TextBlock
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Text="Phone:" />
+                <TextBox
+                    Name="tbPhone"
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2" />
 
-                <TextBlock Grid.Row="10" Grid.Column="0" MinWidth="70" HorizontalAlignment="Center" Text="Email:" />
-                <TextBox Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <TextBlock
+                    Grid.Row="10"
+                    Grid.Column="0"
+                    Text="Email:" />
+                <TextBox
+                    Name="tbEmail"
+                    Grid.Row="10"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2" />
 
-                <TextBlock Grid.Row="12" Grid.Column="0" MinWidth="70" HorizontalAlignment="Center" Text="Mailer:" />
-                <TextBox Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <TextBlock
+                    Grid.Row="12"
+                    Grid.Column="0"
+                    Text="Mailer:" />
+                <TextBox
+                    Name="tbMailer"
+                    Grid.Row="12"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2" />
 
-                <TextBlock Grid.Row="14" Grid.Column="0" MinWidth="70" HorizontalAlignment="Center" Text="Note:" />
-                <TextBox Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <TextBlock
+                    Grid.Row="14"
+                    Grid.Column="0"
+                    Text="Note:" />
+                <TextBox
+                    Name="tbNote"
+                    Grid.Row="14"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2" />
 
 
-                <Button Grid.Column="1" Grid.Row="16" Grid.ColumnSpan="2" Content="Save" >
+                <Button
+                    Grid.Row="16"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Click="Button_Click"
+                    Command="{Binding AddContactCommand}"
+                    Content="Save">
                     <Button.Triggers>
                         <EventTrigger RoutedEvent="Button.Click">
                             <BeginStoryboard Name="stbHideAddContact">
                                 <Storyboard>
-                                    <DoubleAnimation From="500" To="0"
-                                                         Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
-                                                         Storyboard.TargetProperty="MaxWidth" >
-                                    </DoubleAnimation>
+                                    <DoubleAnimation
+                                        Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
+                                        Storyboard.TargetProperty="MaxWidth"
+                                        From="500"
+                                        To="0" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -141,101 +243,138 @@
             </Grid>
 
             <Grid>
-                <ListBox Name="lbContactsList" Margin="5"></ListBox>
+                <ListBox Name="lbContactsList" Margin="5" />
             </Grid>
         </DockPanel>
 
         <Grid Grid.Column="0">
-            <Menu Grid.Column="0" Name="MainMenu" VerticalAlignment="Stretch" KeyboardNavigation.TabNavigation="Cycle">
+            <Menu
+                Name="MainMenu"
+                Grid.Column="0"
+                VerticalAlignment="Stretch"
+                KeyboardNavigation.TabNavigation="Cycle">
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Vertical"/>
+                        <VirtualizingStackPanel Orientation="Vertical" />
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
 
-                <MenuItem Name="mnuView" Header="View" VerticalContentAlignment="Center" VerticalAlignment="Bottom" ToolTip="View" Click="MnuView_Click">
+                <MenuItem
+                    Name="mnuView"
+                    VerticalAlignment="Bottom"
+                    VerticalContentAlignment="Center"
+                    Click="MnuView_Click"
+                    Header="View"
+                    ToolTip="View">
                     <MenuItem.Icon>
-                        <Image Source="Resources/007-eye.png" HorizontalAlignment="Center"/>
+                        <Image HorizontalAlignment="Center" Source="Resources/007-eye.png" />
                     </MenuItem.Icon>
                     <MenuItem.Triggers>
                         <EventTrigger RoutedEvent="MenuItem.Click">
                             <BeginStoryboard Name="stbHideSearchFromView">
                                 <Storyboard>
-                                    <DoubleAnimation From="0" To="0"
-                                                         Storyboard.Target="{x:Reference Name=grdSearchPanel}"
-                                                         Storyboard.TargetProperty="MaxHeight" >
-                                    </DoubleAnimation>
+                                    <DoubleAnimation
+                                        Storyboard.Target="{x:Reference Name=grdSearchPanel}"
+                                        Storyboard.TargetProperty="MaxHeight"
+                                        From="0"
+                                        To="0" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="MenuItem.Click">
                             <BeginStoryboard Name="stbHideAddContactFromView">
                                 <Storyboard>
-                                    <DoubleAnimation From="0" To="0"
-                                                         Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
-                                                         Storyboard.TargetProperty="MaxWidth" >
-                                    </DoubleAnimation>
+                                    <DoubleAnimation
+                                        Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
+                                        Storyboard.TargetProperty="MaxWidth"
+                                        From="0"
+                                        To="0" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                     </MenuItem.Triggers>
                 </MenuItem>
-                <MenuItem Name="mnuSearch" Header="Search" VerticalContentAlignment="Center" VerticalAlignment="Center" ToolTip="Search"
-                          DataContext="{Binding ElementName=grdSearchPanel}">
+                <MenuItem
+                    Name="mnuSearch"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    DataContext="{Binding ElementName=grdSearchPanel}"
+                    Header="Search"
+                    ToolTip="Search">
                     <MenuItem.Icon>
-                        <Image Source="Resources/magnifier.png" HorizontalAlignment="Center"/>
+                        <Image HorizontalAlignment="Center" Source="Resources/magnifier.png" />
                     </MenuItem.Icon>
                     <MenuItem.Triggers>
                         <EventTrigger RoutedEvent="MenuItem.Click">
                             <BeginStoryboard Name="stbShowSearch">
                                 <Storyboard>
-                                    <DoubleAnimation From="0" To="500"
-                                                         Storyboard.Target="{x:Reference Name=grdSearchPanel}"
-                                                         Storyboard.TargetProperty="MaxHeight" >
-                                    </DoubleAnimation>
+                                    <DoubleAnimation
+                                        Storyboard.Target="{x:Reference Name=grdSearchPanel}"
+                                        Storyboard.TargetProperty="MaxHeight"
+                                        From="0"
+                                        To="500" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                     </MenuItem.Triggers>
                 </MenuItem>
-                <MenuItem Name="mnuNew"  Header="New" ToolTip="New">
+                <MenuItem
+                    Name="mnuNew"
+                    Header="New"
+                    ToolTip="New">
                     <MenuItem.Icon>
-                        <Image Source="Resources/new.png" HorizontalAlignment="Center"/>
+                        <Image HorizontalAlignment="Center" Source="Resources/new.png" />
                     </MenuItem.Icon>
-                    <MenuItem Name="mnuAdd"  Header="Add" ToolTip="Add">
+                    <MenuItem
+                        Name="mnuAdd"
+                        Header="Add"
+                        ToolTip="Add">
                         <MenuItem.Icon>
-                            <Image Source="Resources/005-plus.png" HorizontalAlignment="Center"/>
+                            <Image HorizontalAlignment="Center" Source="Resources/005-plus.png" />
                         </MenuItem.Icon>
                         <MenuItem.Triggers>
                             <EventTrigger RoutedEvent="MenuItem.Click">
                                 <BeginStoryboard Name="stbShowAddContact">
                                     <Storyboard>
-                                        <DoubleAnimation From="0" To="500"
-                                                         Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
-                                                         Storyboard.TargetProperty="MaxWidth" >
-                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
+                                            Storyboard.TargetProperty="MaxWidth"
+                                            From="0"
+                                            To="500" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                         </MenuItem.Triggers>
                     </MenuItem>
-                    <MenuItem Name="mnuLoad"  Header="Load" ToolTip="Load" Click="MnuLoad_Click">
+                    <MenuItem
+                        Name="mnuLoad"
+                        Click="MnuLoad_Click"
+                        Header="Load"
+                        ToolTip="Load">
                         <MenuItem.Icon>
-                            <Image Source="Resources/004-upload-button.png" HorizontalAlignment="Center"/>
+                            <Image HorizontalAlignment="Center" Source="Resources/004-upload-button.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Name="mnuOpen"  Header="Open" ToolTip="Open" Click="MnuOpen_Click">
+                <MenuItem
+                    Name="mnuOpen"
+                    Click="MnuOpen_Click"
+                    Header="Open"
+                    ToolTip="Open">
                     <MenuItem.Icon>
-                        <Image Source="Resources/001-arrow.png" HorizontalAlignment="Center"/>
+                        <Image HorizontalAlignment="Center" Source="Resources/001-arrow.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="mnuSave"  Header="Save" ToolTip="Save" Click="MnuSave_Click">
+                <MenuItem
+                    Name="mnuSave"
+                    Click="MnuSave_Click"
+                    Header="Save"
+                    ToolTip="Save">
                     <MenuItem.Icon>
-                        <Image Source="Resources/003-download-symbol.png" HorizontalAlignment="Center"/>
+                        <Image HorizontalAlignment="Center" Source="Resources/003-download-symbol.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </Menu>
         </Grid>
     </Grid>
-</Window>          
+</Window>

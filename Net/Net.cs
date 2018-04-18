@@ -52,7 +52,7 @@ namespace Net
                 host.Opened += new EventHandler(Host_Opened);
                 host.Open();
 
-                Console.ReadLine();
+                    Console.ReadLine();
             }
 
         }

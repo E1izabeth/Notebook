@@ -35,12 +35,11 @@ namespace WpfUI
             return ConvertListOfIContactInfosToListOfString(arr.ToList<IContactInfo>());
         }
 
-        public void AddNew()
+        public void AddNew(string name, string surname, string nickname, string birthday, string phone, string email, string mailer, string note)
         {
-            throw new NotImplementedException();
-            //var NewContact = _user.AddNew();
-            //_book.NewElement(NewContact);
-            //SaveNewContact(NewContact);
+            var NewContact = new ContactInfo(name, surname, nickname, birthday, phone, email, mailer, note);
+            _book.NewElement(NewContact);
+            SaveNewContact(NewContact);
         }
 
         public void LoadNew(string path)
@@ -99,12 +98,10 @@ namespace WpfUI
             return ConvertListOfIContactInfosToListOfString(contactInfos.ToList<IContactInfo>());
         }
 
-        public void NameSurnameSearch()
+        public List<string> NameSurnameSearch(string searchText)
         {
-            throw new NotImplementedException();
-            //string query = _user.AskRequest();
-            //var contactInfos = _book.GetContacts(specName: new ByNameSearchCriteria(query), specSurname: new BySurnameSearchCriteria(query));
-            //_user.PrintSelection(contactInfos);
+            var contactInfos = _book.GetContacts(specName: new ByNameSearchCriteria(searchText), specSurname: new BySurnameSearchCriteria(searchText));
+            return ConvertListOfIContactInfosToListOfString(contactInfos.ToList<IContactInfo>());
         }
 
         private void SaveNewContact(IContactInfo NewContact)

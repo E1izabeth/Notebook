@@ -24,13 +24,14 @@ namespace WpfUI
     /// </summary>
     public partial class MainWindow : Window
     {
-       readonly AppConnector _app;
+        readonly AppConnector _app;
 
         public MainWindow()
         {
             _app = new AppConnector(Client.Client.WCFclient());
             InitializeComponent();
-            lbContactsList.ItemsSource = _app.ViewAll();
+            //var sp = new SearchPanelViewModel();
+            //lbContactsList.ItemsSource = _app.ViewAll();
         }
 
         private void MnuSave_Click(object sender, RoutedEventArgs e)
@@ -44,6 +45,7 @@ namespace WpfUI
                 string path = folderBrowser.SelectedPath;
                 _app.SaveAllContacts(path);
             }
+
             lbContactsList.ItemsSource = _app.ViewAll();
         }
 
@@ -94,28 +96,84 @@ namespace WpfUI
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             var searchText = txtbSearch.Text;
-            
+            var list = new List<string>();
+
             if (chbByName.IsChecked == true && chbBySurname.IsChecked == true)
             {
-                lbContactsList.ItemsSource = _app.SurnameSearch(searchText);
+                list = _app.SurnameSearch(searchText);
             }
             else if (chbByName.IsChecked == true)
             {
-                lbContactsList.ItemsSource = _app.NameSearch(searchText);
+                list = _app.NameSearch(searchText);
             }
             else if (chbBySurname.IsChecked == true)
             {
-                lbContactsList.ItemsSource = _app.SurnameSearch(searchText);
+                list = _app.SurnameSearch(searchText);
             }
             else if (chbByPhone.IsChecked == true)
             {
-                lbContactsList.ItemsSource = _app.PhoneSearch(searchText);
+                list = _app.PhoneSearch(searchText);
             }
             else if (chbByEmail.IsChecked == true)
             {
-                lbContactsList.ItemsSource = _app.EmailSearch(searchText);
+                list = _app.EmailSearch(searchText);
             }
-            
+
+            if (list.Count == 0)
+            {
+                list.Add("Search didn't give results");
+            }
+
+            lbContactsList.ItemsSource = list;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _app.AddNew(tbName.Text, tbSurname.Text, tbNickname.Text, tbBirthday.Text, tbPhone.Text, tbEmail.Text, tbMailer.Text, tbNote.Text);
+            tbName.Text = ""; tbSurname.Text = ""; tbNickname.Text = ""; tbBirthday.Text = ""; tbPhone.Text = ""; tbEmail.Text = ""; tbMailer.Text = ""; tbNote.Text = "";
+            lbContactsList.ItemsSource = _app.ViewAll();
+        }
+
+        private void chbBy_Checked(object sender, RoutedEventArgs e)
+        {
+            if (chbByName.IsChecked == true || chbBySurname.IsChecked == true || chbByPhone.IsChecked == true || chbByEmail.IsChecked == true)
+            {
+                btnSearch.IsEnabled = true;
+            }
+            else
+            {
+                btnSearch.IsEnabled = false;
+            }
+
+            if (chbByEmail.IsChecked == true)
+            {
+                chbByName.IsEnabled = false;
+                chbByPhone.IsEnabled = false;
+                chbBySurname.IsEnabled = false;
+            }
+            else if (chbByPhone.IsChecked == true)
+            {
+                chbByName.IsEnabled = false;
+                chbByEmail.IsEnabled = false;
+                chbBySurname.IsEnabled = false;
+            }
+            else if (chbByName.IsChecked == true && chbBySurname.IsChecked == true)
+            {
+                chbByPhone.IsEnabled = false;
+                chbByEmail.IsEnabled = false;
+            }
+            else if (chbByName.IsChecked == true || chbBySurname.IsChecked == true)
+            {
+                chbByPhone.IsEnabled = false;
+                chbByEmail.IsEnabled = false;
+            }
+            else
+            {
+                chbBySurname.IsEnabled = true;
+                chbByPhone.IsEnabled = true;
+                chbByName.IsEnabled = true;
+                chbByEmail.IsEnabled = true;
+            }
         }
     }
 }

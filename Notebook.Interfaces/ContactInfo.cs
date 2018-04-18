@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -31,6 +32,18 @@ namespace Notebook.Interfaces
         public ContactInfo()
         {
 
+        }
+
+        public ContactInfo(string firstName, string lastName, string nickname, string birthday, string phone, string email, string mailer, string note)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Nickname = nickname;
+            this.Birthday = birthday;
+            this.Phone = phone;
+            this.Email = email;
+            this.Mailer = mailer;
+            this.Note = note;
         }
     }
 }
