@@ -1,15 +1,9 @@
-﻿<Window
-    x:Class="WpfUI.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Notebook"
-    Width="500"
-    Height="400"
-    MinWidth="150"
-    MinHeight="200"
-    Background="Lavender"
-    DataContext="{Binding Main, Source={StaticResource Locator}}"
-    Icon="Resources\008-group.png">
+﻿<Window x:Class="WpfUI.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Title}"
+        Width="500" Height="400" MinWidth="150" MinHeight="200"
+        Background="Lavender" Icon="Resources\008-group.png"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -18,7 +12,7 @@
 
         <DockPanel Grid.Column="1">
             <DockPanel.Resources>
-                <Style TargetType="Button">
+                <Style x:Key="BtnStyle" TargetType="Button">
                     <Setter Property="MinHeight" Value="24" />
                     <Setter Property="MinWidth" Value="75" />
                     <Setter Property="HorizontalAlignment" Value="Right" />
@@ -26,23 +20,20 @@
                 </Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="FontStyle" Value="Normal" />
-                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontSize" Value="14" />
                     <Setter Property="FontFamily" Value="Arial" />
                 </Style>
                 <Style TargetType="MenuItem">
                     <Setter Property="FontStyle" Value="Normal" />
-                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontSize" Value="14" />
                     <Setter Property="FontFamily" Value="Arial" />
                     <Setter Property="VerticalAlignment" Value="Center" />
                     <Setter Property="HorizontalAlignment" Value="Left" />
                 </Style>
             </DockPanel.Resources>
 
-
-            <Grid
-                Name="grdSearchPanel"
-                MaxHeight="0"
-                DockPanel.Dock="Top">
+            <Grid Name ="grdSearchPanel" DockPanel.Dock="Top" MaxHeight="0" 
+                  DataContext="{Binding SearchPanel, Source={StaticResource Locator}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="5" />
@@ -53,57 +44,32 @@
                     <RowDefinition Height="5" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBox
-                    Name="txtbSearch"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Text="{Binding SearchString}" />
-                <Button
-                    Name="btnSearch"
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Click="BtnSearch_Click"
-                    Content="Search">
+                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchString}"  />
+                <Button Grid.Row="0" Grid.Column="2" Command="{Binding SearchCommand}" Content="Search" IsEnabled="{Binding SearchAvailable}">
                     <Button.Triggers>
                         <EventTrigger RoutedEvent="Button.Click">
                             <BeginStoryboard Name="stbHideSearch">
                                 <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.Target="{x:Reference Name=grdSearchPanel}"
-                                        Storyboard.TargetProperty="MaxHeight"
-                                        From="500"
-                                        To="0" />
+                                    <DoubleAnimation Storyboard.Target="{x:Reference Name=grdSearchPanel}"
+                                                     Storyboard.TargetProperty="MaxHeight"
+                                                     From="500"
+                                                     To="0" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                     </Button.Triggers>
                 </Button>
                 <WrapPanel Grid.Row="2" Grid.Column="0">
-                    <CheckBox
-                        Name="chbByName"
-                        Content="ByName"
-                        IsChecked="{Binding chbByName}" />
-                    <CheckBox
-                        Name="chbBySurname"
-                        Content="BySurname"
-                        IsChecked="{Binding chbBySurname}" />
-                    <CheckBox
-                        Name="chbByPhone"
-                        Content="ByPhone"
-                        IsChecked="{Binding chbByPhone}" />
-                    <CheckBox
-                        Name="chbByEmail"
-                        Content="ByEmail"
-                        IsChecked="{Binding chbByEmail}" />
-                    <Button Margin="0,5,5,5" Content="Clear" />
+                    <CheckBox Content="ByName" IsChecked="{Binding SByName}" IsEnabled="{Binding SByNameAvailable}" />
+                    <CheckBox Content="BySurname" IsChecked="{Binding SBySurname}" />
+                    <CheckBox Content="ByPhone" IsChecked="{Binding SByPhone}" />
+                    <CheckBox Content="ByEmail" IsChecked="{Binding SByEmail}" />
+                    <Button Margin="20,0,0,0" Content="Clear" />
                 </WrapPanel>
             </Grid>
 
-            <Grid
-                Name="grdAddContactPanel"
-                MaxWidth="0"
-                Margin="5"
-                DockPanel.Dock="Right">
+            <Grid Name ="grdAddContactPanel" MaxWidth="0" Margin="5" DockPanel.Dock="Right"
+                  DataContext="{Binding AddPanel, Source={StaticResource Locator}}">
                 <Grid.Resources>
                     <Style TargetType="TextBox">
                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -137,103 +103,38 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Text="Name:" />
-                <TextBox
-                    Name="tbName"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" />
+                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.FirstName}" />
 
-                <TextBlock
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Text="Surname:" />
-                <TextBox
-                    Name="tbSurname"
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Surname:" />
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.LastName}" />
 
-                <TextBlock
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Text="Nickname:" />
-                <TextBox
-                    Name="tbNickname"
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Nickname:" />
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Nickname}"/>
 
-                <TextBlock
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    Text="Birthday:" />
-                <TextBox
-                    Name="tbBirthday"
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Birthday:" />
+                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Birthday}" />
 
-                <TextBlock
-                    Grid.Row="8"
-                    Grid.Column="0"
-                    Text="Phone:" />
-                <TextBox
-                    Name="tbPhone"
-                    Grid.Row="8"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Phone:" />
+                <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Phone}" />
 
-                <TextBlock
-                    Grid.Row="10"
-                    Grid.Column="0"
-                    Text="Email:" />
-                <TextBox
-                    Name="tbEmail"
-                    Grid.Row="10"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="10" Grid.Column="0" Text="Email:" />
+                <TextBox Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Email}" />
 
-                <TextBlock
-                    Grid.Row="12"
-                    Grid.Column="0"
-                    Text="Mailer:" />
-                <TextBox
-                    Name="tbMailer"
-                    Grid.Row="12"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="12" Grid.Column="0" Text="Mailer:" />
+                <TextBox Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Mailer}" />
 
-                <TextBlock
-                    Grid.Row="14"
-                    Grid.Column="0"
-                    Text="Note:" />
-                <TextBox
-                    Name="tbNote"
-                    Grid.Row="14"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="14" Grid.Column="0" Text="Note:" />
+                <TextBox Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Note}" />
 
-
-                <Button
-                    Grid.Row="16"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Click="Button_Click"
-                    Command="{Binding AddContactCommand}"
-                    Content="Save">
+                <Button Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="2" Content="Save"
+                       Command="{Binding SaveCommand}" >
                     <Button.Triggers>
                         <EventTrigger RoutedEvent="Button.Click">
                             <BeginStoryboard Name="stbHideAddContact">
                                 <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
-                                        Storyboard.TargetProperty="MaxWidth"
-                                        From="500"
-                                        To="0" />
+                                    <DoubleAnimation Storyboard.TargetProperty="MaxWidth" From="500" To="0" 
+                                                     Storyboard.Target="{x:Reference Name=grdAddContactPanel}" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -243,29 +144,32 @@
             </Grid>
 
             <Grid>
-                <ListBox Name="lbContactsList" Margin="5" />
+                <ListView Margin="5" ItemsSource="{Binding Contacts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="14">
+                                <Run>Name: </Run>
+                                <Run Text="{Binding FirstName}"></Run>
+                                <Run>Surname:</Run>
+                                <Run Text="{Binding LastName}"></Run>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </DockPanel>
 
         <Grid Grid.Column="0">
-            <Menu
-                Name="MainMenu"
-                Grid.Column="0"
-                VerticalAlignment="Stretch"
-                KeyboardNavigation.TabNavigation="Cycle">
+            <Menu Grid.Column="0" VerticalAlignment="Stretch" KeyboardNavigation.TabNavigation="Cycle">
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel Orientation="Vertical" />
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
 
-                <MenuItem
-                    Name="mnuView"
-                    VerticalAlignment="Bottom"
-                    VerticalContentAlignment="Center"
-                    Click="MnuView_Click"
-                    Header="View"
-                    ToolTip="View">
+                <MenuItem VerticalAlignment="Bottom" VerticalContentAlignment="Center"
+                          Header="View" ToolTip="View"
+                          Command="{Binding Path=ViewCommand}">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/007-eye.png" />
                     </MenuItem.Icon>
@@ -273,34 +177,24 @@
                         <EventTrigger RoutedEvent="MenuItem.Click">
                             <BeginStoryboard Name="stbHideSearchFromView">
                                 <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.Target="{x:Reference Name=grdSearchPanel}"
-                                        Storyboard.TargetProperty="MaxHeight"
-                                        From="0"
-                                        To="0" />
+                                    <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="0" To="0"
+                                                     Storyboard.Target="{x:Reference Name=grdSearchPanel}" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="MenuItem.Click">
                             <BeginStoryboard Name="stbHideAddContactFromView">
                                 <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
-                                        Storyboard.TargetProperty="MaxWidth"
-                                        From="0"
-                                        To="0" />
+                                    <DoubleAnimation Storyboard.TargetProperty="MaxWidth" From="0" To="0"
+                                                     Storyboard.Target="{x:Reference Name=grdAddContactPanel}" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                     </MenuItem.Triggers>
                 </MenuItem>
-                <MenuItem
-                    Name="mnuSearch"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    DataContext="{Binding ElementName=grdSearchPanel}"
-                    Header="Search"
-                    ToolTip="Search">
+                <MenuItem VerticalAlignment="Center" VerticalContentAlignment="Center"
+                          DataContext="{Binding ElementName=grdSearchPanel}"
+                          Header="Search" ToolTip="Search">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/magnifier.png" />
                     </MenuItem.Icon>
@@ -308,27 +202,18 @@
                         <EventTrigger RoutedEvent="MenuItem.Click">
                             <BeginStoryboard Name="stbShowSearch">
                                 <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.Target="{x:Reference Name=grdSearchPanel}"
-                                        Storyboard.TargetProperty="MaxHeight"
-                                        From="0"
-                                        To="500" />
+                                    <DoubleAnimation Storyboard.TargetProperty="MaxHeight" From="0" To="500"
+                                                     Storyboard.Target="{x:Reference Name=grdSearchPanel}" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                     </MenuItem.Triggers>
                 </MenuItem>
-                <MenuItem
-                    Name="mnuNew"
-                    Header="New"
-                    ToolTip="New">
+                <MenuItem Header="New" ToolTip="New">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/new.png" />
                     </MenuItem.Icon>
-                    <MenuItem
-                        Name="mnuAdd"
-                        Header="Add"
-                        ToolTip="Add">
+                    <MenuItem Header="Add" ToolTip="Add">
                         <MenuItem.Icon>
                             <Image HorizontalAlignment="Center" Source="Resources/005-plus.png" />
                         </MenuItem.Icon>
@@ -336,40 +221,25 @@
                             <EventTrigger RoutedEvent="MenuItem.Click">
                                 <BeginStoryboard Name="stbShowAddContact">
                                     <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.Target="{x:Reference Name=grdAddContactPanel}"
-                                            Storyboard.TargetProperty="MaxWidth"
-                                            From="0"
-                                            To="500" />
+                                        <DoubleAnimation Storyboard.TargetProperty="MaxWidth" From="0" To="500" 
+                                                         Storyboard.Target="{x:Reference Name=grdAddContactPanel}" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                         </MenuItem.Triggers>
                     </MenuItem>
-                    <MenuItem
-                        Name="mnuLoad"
-                        Click="MnuLoad_Click"
-                        Header="Load"
-                        ToolTip="Load">
+                    <MenuItem Header="Load" ToolTip="Load" Command="{Binding Path=LoadCommand}">
                         <MenuItem.Icon>
                             <Image HorizontalAlignment="Center" Source="Resources/004-upload-button.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem
-                    Name="mnuOpen"
-                    Click="MnuOpen_Click"
-                    Header="Open"
-                    ToolTip="Open">
+                <MenuItem Header="Open" ToolTip="Open" Command = "{Binding Path=OpenCommand}">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/001-arrow.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem
-                    Name="mnuSave"
-                    Click="MnuSave_Click"
-                    Header="Save"
-                    ToolTip="Save">
+                <MenuItem Header="Save" ToolTip="Save" Command = "{Binding Path=SaveCommand}">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/003-download-symbol.png" />
                     </MenuItem.Icon>

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Notebook.Interfaces;
 
 namespace Notebook
 {
-    class Dialogs
+    internal class Dialogs
     {
         public ContactInfo AddNew()
         {
-            ContactInfo note = new ContactInfo();
+            var note = new ContactInfo();
             Console.WriteLine(Notebook_v3.Properties.text.New_contact);
             if ((note.FirstName = ReadProp(Notebook_v3.Properties.text.First_name + ": ", Notebook_v3.Properties.text.Invalid_first_name, ValidName)) == null)
                 return AddNew();
@@ -35,22 +33,19 @@ namespace Notebook
         private string ReadProp(string message, string errMsg, Func<string, bool> validateAction)
         {
             Console.Write(message);
-            string value = Console.ReadLine();
-            if (!validateAction(value))
-            {
-                Console.WriteLine(errMsg);
-                Console.WriteLine(Notebook_v3.Properties.text.ButtonAgain);
-                Console.ReadKey();
-                value = null;
-            }
+            var value = Console.ReadLine();
+            if (validateAction(value)) return value;
+            Console.WriteLine(errMsg);
+            Console.WriteLine(Notebook_v3.Properties.text.ButtonAgain);
+            Console.ReadKey();
 
-            return value;
+            return null;
         }
 
         public string AskRequest()
         {
             Console.Write(Notebook_v3.Properties.text.Request + ": ");
-            string answer = Console.ReadLine();
+            var answer = Console.ReadLine();
             Console.WriteLine(Notebook_v3.Properties.text.Searching);
             return answer;
         }
@@ -58,29 +53,29 @@ namespace Notebook
         public string LoadPath()
         {
             Console.Write(Notebook_v3.Properties.text.InputPath + ": ");
-            string _path = Console.ReadLine();
-            return _path;
+            var path = Console.ReadLine();
+            return path;
         }
 
         public void PrintSelection(List<IContactInfo> book)
         {
             Console.WriteLine(Notebook_v3.Properties.text.Results + "(" + book.Count + ")");
-            this.PrintCollectionImpl(book);
+            PrintCollectionImpl(book);
             Console.WriteLine(Notebook_v3.Properties.text.ButtonContinue);
             Console.ReadKey();
         }
 
         public void PrintSelection(IContactInfo[] book)
         {
-            Console.WriteLine(Notebook_v3.Properties.text.Results + "(" + book.Count() + ")");
-            this.PrintCollectionImpl(book.ToList<IContactInfo>());
+            Console.WriteLine(Notebook_v3.Properties.text.Results + "(" + book.Length + ")");
+            PrintCollectionImpl(book.ToList<IContactInfo>());
             Console.WriteLine(Notebook_v3.Properties.text.ButtonContinue);
             Console.ReadKey();
         }
 
-        private void PrintCollectionImpl(List<IContactInfo> contacts)
+        private void PrintCollectionImpl(IReadOnlyCollection<IContactInfo> contacts)
         {
-            int i = 0;
+            var i = 0;
             foreach (IContactInfo tmp in contacts)
             {
                 i += 1;

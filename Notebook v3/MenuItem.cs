@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Notebook
 {
-    class MenuItem : IMenuItem
+    internal class MenuItem : IMenuItem
     {
         readonly List<MenuItem> _children = new List<MenuItem>();
 
@@ -26,7 +26,7 @@ namespace Notebook
         public MenuItem(string text, Action onSelected)
             : this(text)
         {
-            this.OnSelected += onSelected;
+            OnSelected += onSelected;
         }
         
         public void Add(MenuItem child)

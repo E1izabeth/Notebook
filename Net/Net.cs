@@ -1,22 +1,6 @@
 ﻿using Notebook.Impl;
 using Notebook.Interfaces;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Tcp;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 
@@ -27,7 +11,7 @@ namespace Net
     {
         public const ushort Port = 9090;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             AppDomain.CurrentDomain.FirstChanceException += (sender, ea) => {
                 System.Diagnostics.Debug.Print(ea.Exception.ToString());
@@ -48,8 +32,8 @@ namespace Net
                     host.Description.Behaviors.Add(behavior);
                 }
                 host.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexHttpBinding(), "mex");
-                host.Opening += new EventHandler(Host_Opening);
-                host.Opened += new EventHandler(Host_Opened);
+                host.Opening += Host_Opening;
+                host.Opened += Host_Opened;
                 host.Open();
 
                     Console.ReadLine();

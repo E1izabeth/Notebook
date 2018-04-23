@@ -15,6 +15,8 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace WpfUI.ViewModel
 {
@@ -30,7 +32,7 @@ namespace WpfUI.ViewModel
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
+            
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
             ////    // Create design time view services and models
@@ -43,6 +45,8 @@ namespace WpfUI.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<SearchPanelViewModel>();
+            SimpleIoc.Default.Register<AddContactViewModel>();
         }
 
         public MainViewModel Main
@@ -52,7 +56,23 @@ namespace WpfUI.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public SearchPanelViewModel SearchPanel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SearchPanelViewModel>();
+            }
+        }
+
+        public AddContactViewModel AddPanel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AddContactViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

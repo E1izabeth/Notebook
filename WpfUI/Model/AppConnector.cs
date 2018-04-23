@@ -10,7 +10,7 @@ using VCard;
 
 namespace WpfUI
 {
-    class AppConnector
+    public class AppConnector
     {
         readonly INotebook _book;
 
@@ -19,27 +19,16 @@ namespace WpfUI
             _book = nb;
         }
 
-        private List<string> ConvertListOfIContactInfosToListOfString(List<IContactInfo> contactInfos)
-        {
-            var strArr = new List<string>();
-            foreach (var item in contactInfos)
-            {
-                strArr.Add($"Name: {item.FirstName} {item.LastName}\n Phone: {item.Phone} Email: {item.Email} Mailer: {item.Mailer} \n Birthday: {item.Birthday} Note: {item.Note}");
-            }
-            return strArr;
-        }
-
-        public List<string> ViewAll()
+        public IEnumerable<IContactInfo> ViewAll()
         {
             var arr = _book.GetContacts();
-            return ConvertListOfIContactInfosToListOfString(arr.ToList<IContactInfo>());
+            return arr.ToList<IContactInfo>();
         }
 
-        public void AddNew(string name, string surname, string nickname, string birthday, string phone, string email, string mailer, string note)
+        public void AddNew(ContactInfo contact)
         {
-            var NewContact = new ContactInfo(name, surname, nickname, birthday, phone, email, mailer, note);
-            _book.NewElement(NewContact);
-            SaveNewContact(NewContact);
+            _book.NewElement(contact);
+            SaveNewContact(contact);
         }
 
         public void LoadNew(string path)
@@ -74,34 +63,34 @@ namespace WpfUI
 
 
 
-        public List<string> NameSearch(string searchText)
+        public List<IContactInfo> NameSearch(string searchText)
         {
             var contactInfos = _book.GetContacts(specName: new ByNameSearchCriteria(searchText));
-            return ConvertListOfIContactInfosToListOfString(contactInfos.ToList<IContactInfo>());
+            return contactInfos.ToList<IContactInfo>();
         }
 
-        public List<string> SurnameSearch(string searchText)
+        public List<IContactInfo> SurnameSearch(string searchText)
         {
             var contactInfos = _book.GetContacts(specSurname: new BySurnameSearchCriteria(searchText));
-            return ConvertListOfIContactInfosToListOfString(contactInfos.ToList<IContactInfo>());
+            return contactInfos.ToList<IContactInfo>();
         }
 
-        public List<string> PhoneSearch(string searchText)
+        public List<IContactInfo> PhoneSearch(string searchText)
         {
             var contactInfos = _book.GetContacts(specPhone: new ByPhoneSearchCriteria(searchText));
-            return ConvertListOfIContactInfosToListOfString(contactInfos.ToList<IContactInfo>());
+            return contactInfos.ToList<IContactInfo>();
         }
 
-        public List<string> EmailSearch(string searchText)
+        public List<IContactInfo> EmailSearch(string searchText)
         {
             var contactInfos = _book.GetContacts(specEmail: new ByEmailSearchCriteria(searchText));
-            return ConvertListOfIContactInfosToListOfString(contactInfos.ToList<IContactInfo>());
+            return contactInfos.ToList<IContactInfo>();
         }
 
-        public List<string> NameSurnameSearch(string searchText)
+        public List<IContactInfo> NameSurnameSearch(string searchText)
         {
             var contactInfos = _book.GetContacts(specName: new ByNameSearchCriteria(searchText), specSurname: new BySurnameSearchCriteria(searchText));
-            return ConvertListOfIContactInfosToListOfString(contactInfos.ToList<IContactInfo>());
+            return contactInfos.ToList<IContactInfo>();
         }
 
         private void SaveNewContact(IContactInfo NewContact)

@@ -21,4 +21,3 @@ D:\MyProjects\notebook\Notebook.Interfaces\bin\Debug\Notebook.Interfaces.pdb
 D:\MyProjects\notebook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.csproj.CoreCompileInputs.cache
 D:\MyProjects\notebook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.dll
 D:\MyProjects\notebook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.pdb
-D:\MyProjects\notebook\Notebook.Interfaces\obj\Debug\Notebook.Interfaces.csprojResolveAssemblyReference.cache

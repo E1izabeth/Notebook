@@ -4,21 +4,12 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using Notebook.Interfaces;
-using System.IO;
 using System.Diagnostics;
 using System.Xml;
 using System.Xml.Linq;
-using System.Net.Http;
-using System.Net;
-using System.Collections.Specialized;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting;
-using System.Collections;
-using System.Runtime.Serialization.Formatters;
 using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 
 namespace Client
@@ -34,7 +25,7 @@ namespace Client
             this.Namespace = @"http://schemas.xml/";
             this.NamespaceManager = new XmlNamespaceManager(new NameTable());
             this.NamespaceManager.AddNamespace("x", this.Namespace);
-            this.ServiceUrl = String.Format(@"http://127.0.0.1:{0}/", port);
+            this.ServiceUrl = $@"http://127.0.0.1:{port}/";
         }
 
         public static INotebook SvcClient(int port)
@@ -59,7 +50,7 @@ namespace Client
         {
             try
             {
-                XDocument xDoc = new XDocument(
+                var xDoc = new XDocument(
                     new XDeclaration("1.0", "utf8", ""),
                     new XElement(
                             elem
@@ -94,7 +85,7 @@ namespace Client
         private int RecieveCount()
         {
             var data = new byte[1];
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             //int bytes = 0;
             //do
             //{
@@ -116,7 +107,7 @@ namespace Client
         private List<IContactInfo> RecieveContacts()
         {
             var data = new byte[1];
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             //int bytes = 0;
             //do
             //{
@@ -138,7 +129,7 @@ namespace Client
 
         private int ParseXMlCount(string xmlString)
         {
-            int obj = -1;
+            var obj = -1;
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(xmlString);

@@ -7,49 +7,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WpfUI.ViewModel
 {
-    class AddContactViewModel : ViewModelBase
+    public class AddContactViewModel : ViewModelBase
     {
+        private AppConnector _app;
+        
         public AddContactViewModel()
         {
-            this.ContactInfo = new ContactInfo();
+            this.Contact = new ContactInfo();
+            Messenger.Default.Register<AppConnector>(_app, "GetAppConnector", (t) => {
+                _app = t;
+            });
         }
-        private RelayCommand _saveCommand;
 
+        public ContactInfo Contact { get; private set; }
+
+        private RelayCommand _saveCommand;
         public RelayCommand SaveCommand
         {
             get
             {
-                if (_saveCommand == null)
-                {
-                    _saveCommand = new RelayCommand(this.Save);
-                }
-                return _saveCommand;
+                return _saveCommand ??
+                    (_saveCommand = new RelayCommand(this.Save));
             }
-            set { _saveCommand = value; }
         }
 
-        public ContactInfo ContactInfo
+
+        private void Save()
         {
-            get
-            {
-                return _contact;
-            }
-            set
-            {
-                _contact = value;
-                RaisePropertyChanged("Contact");
-            }
-
-        }
-
-        private ContactInfo _contact;
-
-        void Save()
-        {
-            Messenger.Default.Send<ContactInfo>(this.ContactInfo, "ContactAdded");
+            _app.AddNew(this.Contact);
+            Messenger.Default.Send(this.Contact, "ContactAdded");
         }
     }
 }

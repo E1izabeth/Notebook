@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Notebook
 {
-
-    interface IMenuItem : IEnumerable<IMenuItem>
+    internal interface IMenuItem : IEnumerable<IMenuItem>
     {
         string Text { get; }
         IReadOnlyList<IMenuItem> Children { get; }
@@ -16,7 +15,7 @@ namespace Notebook
         void InvokeHandler();
     }
 
-    class Menu
+    internal class Menu
     {
         readonly IMenuItem _root;
 
@@ -27,21 +26,21 @@ namespace Notebook
 
         public void RunMenu()
         {
-            this.RunMenuImpl(_root);
+            RunMenuImpl(_root);
         }
 
         private void RunMenuImpl(IMenuItem currMenu)
         {
-            var selectedMenu = this.SelectMenu(currMenu);
+            var selectedMenu = SelectMenu(currMenu);
 
             while (selectedMenu != null)
             {
                 if (selectedMenu.Children.Count > 0)
-                    this.RunMenuImpl(selectedMenu);
+                    RunMenuImpl(selectedMenu);
                 else
                     selectedMenu.InvokeHandler();
 
-                selectedMenu = this.SelectMenu(currMenu);
+                selectedMenu = SelectMenu(currMenu);
             }
         }
 

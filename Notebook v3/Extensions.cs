@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Notebook
 {
-    static class Extensions
+    internal static class Extensions
     {
         public static void ForEeach<T>(this IEnumerable<T> seq, Action<T> act)
         {

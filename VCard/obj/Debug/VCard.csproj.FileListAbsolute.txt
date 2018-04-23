@@ -15,4 +15,3 @@ D:\MyProjects\notebook\VCard\bin\Debug\VCard.pdb
 D:\MyProjects\notebook\VCard\obj\Debug\VCard.csproj.CoreCompileInputs.cache
 D:\MyProjects\notebook\VCard\obj\Debug\VCard.dll
 D:\MyProjects\notebook\VCard\obj\Debug\VCard.pdb
-D:\MyProjects\notebook\VCard\obj\Debug\VCard.csprojResolveAssemblyReference.cache
