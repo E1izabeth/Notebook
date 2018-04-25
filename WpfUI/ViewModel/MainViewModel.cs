@@ -2,7 +2,11 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Notebook.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WpfUI.ViewModel
@@ -30,31 +34,43 @@ namespace WpfUI.ViewModel
         private ObservableCollection<IContactInfo> __listCond;
         private ObservableCollection<IContactInfo> _contacts;
 
-        public MainViewModel()
+        private ViewModelLocator _owner;
+
+        public MainViewModel(ViewModelLocator owner)
         {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-En");
+            _owner = owner;
+
             _app = new AppConnector(Client.Client.WCFclient());
-            if (ViewModelBase.IsInDesignModeStatic)
+            if (IsInDesignModeStatic)
             {
                 // Create design time view services and models
-                this.Title = "Notebook(Disign mode)";
+                this.Title = $"{WpfUI.Resources.text.Notebook}(Disign mode)";
             }
             else
             {
                 // Create run time view services and models
-                this.Title = "Notebook";
+                this.Title = $"{WpfUI.Resources.text.Notebook}";
             }
 
             this.Contacts = new ObservableCollection<IContactInfo>(_app.ViewAll());
             __listCond = _contacts;
 
             Messenger.Default.Register<ContactInfo>(this, "ContactAdded", (p) => {
-                __listCond.Add(p);
-                this.Contacts = __listCond;
+                this.AddContact(p);
             });
             Messenger.Default.Register<System.Collections.Generic.List<IContactInfo>>(this, "SearchedContacts", (p) => {
                 this.Contacts = new ObservableCollection<IContactInfo>(p);
             });
+
             Messenger.Default.Send(_app, "GetAppConnector");
+        }
+
+        internal void AddContact(ContactInfo contact)
+        {
+            _app.AddNew(contact);
+            __listCond.Add(contact);
+            this.Contacts = __listCond;
         }
 
         public ObservableCollection<IContactInfo> Contacts
@@ -107,6 +123,31 @@ namespace WpfUI.ViewModel
             }
             __listCond = new ObservableCollection<IContactInfo>(_app.ViewAll());
             this.Contacts = __listCond;
+        }
+
+        internal List<IContactInfo> PhoneSearch(string searchText)
+        {
+            return _app.PhoneSearch(searchText);
+        }
+
+        internal List<IContactInfo> EmailSearch(string searchText)
+        {
+            return _app.EmailSearch(searchText);
+        }
+
+        internal List<IContactInfo> NameSurnameSearch(string searchText)
+        {
+            return _app.NameSurnameSearch(searchText);
+        }
+
+        internal List<IContactInfo> NameSearch(string searchText)
+        {
+            return _app.NameSearch(searchText);
+        }
+
+        internal List<IContactInfo> SurnameSearch(string searchText)
+        {
+            return _app.SurnameSearch(searchText);
         }
 
         private RelayCommand _openCommand;

@@ -39,6 +39,7 @@ namespace WpfUI.ViewModel
             {
                 _sbyname = value;
                 CheckAvailable();
+                RaisePropertyChanged("SByName");
             }
         }
         private bool _sbysurname;
@@ -52,6 +53,7 @@ namespace WpfUI.ViewModel
             {
                 _sbysurname = value;
                 CheckAvailable();
+                RaisePropertyChanged("SBySurname");
             }
         }
         private bool _sbyphone;
@@ -65,6 +67,7 @@ namespace WpfUI.ViewModel
             {
                 _sbyphone = value;
                 CheckAvailable();
+                RaisePropertyChanged("SByPhone");
             }
         }
         private bool _sbyemail;
@@ -78,29 +81,31 @@ namespace WpfUI.ViewModel
             {
                 _sbyemail = value;
                 CheckAvailable();
+                RaisePropertyChanged("SByEmail");
             }
         }
-        public bool SearchAvailable { get; private set; }
-        public bool SByNameAvailable { get; private set; }
-        public bool SBySurnameAvailable { get; private set; }
-        public bool SByPhoneAvailable { get; private set; }
-        public bool SByEmailAvailable { get; private set; }
 
-        private AppConnector _app;
+        public bool SearchAvailable { get; set; }
+        public bool SByNameAvailable { get; set; }
+        public bool SBySurnameAvailable { get; set; }
+        public bool SByPhoneAvailable { get; set; }
+        public bool SByEmailAvailable { get; set; }
 
-        public SearchPanelViewModel()
+        private ViewModelLocator _owner;
+
+        public SearchPanelViewModel(ViewModelLocator owner)
         {
+            _owner = owner;
             this.SByName = true;
             this.SBySurname = false;
             this.SByNameAvailable = true;
             this.SByPhoneAvailable = true;
             this.SBySurnameAvailable = true;
             this.SByEmailAvailable = true;
-            this.SearchAvailable = true;
             //_app = new AppConnector(Client.Client.WCFclient());
-            Messenger.Default.Register<AppConnector>(_app, "GetAppConnector", (t) => {
-                _app = t;
-            });
+            //Messenger.Default.Register<AppConnector>(_app, "GetAppConnector", (t) => {
+            //    _app = t;
+            //});
         }
 
         private RelayCommand _searchCommand;
@@ -120,23 +125,23 @@ namespace WpfUI.ViewModel
 
             if (this.SByName == true && this.SBySurname == true)
             {
-                list = _app.SurnameSearch(searchText);
+                list = _owner.Main.NameSurnameSearch(searchText);
             }
             else if (this.SByName == true)
             {
-                list = _app.NameSearch(searchText);
+                list = _owner.Main.NameSearch(searchText);
             }
             else if (this.SBySurname == true)
             {
-                list = _app.SurnameSearch(searchText);
+                list = _owner.Main.SurnameSearch(searchText);
             }
             else if (this.SByPhone == true)
             {
-                list = _app.PhoneSearch(searchText);
+                list = _owner.Main.PhoneSearch(searchText);
             }
             else if (this.SByEmail == true)
             {
-                list = _app.EmailSearch(searchText);
+                list = _owner.Main.EmailSearch(searchText);
             }
             Messenger.Default.Send(list, "SearchedContacts");
         }
@@ -152,28 +157,40 @@ namespace WpfUI.ViewModel
             {
                 this.SearchAvailable = false;
             }
+            RaisePropertyChanged("SearchAvailable");
+
 
             if (this.SByEmail == true)
             {
                 this.SByNameAvailable = false;
                 this.SByPhoneAvailable = false;
                 this.SBySurnameAvailable = false;
+                RaisePropertyChanged("SByNameAvailable");
+                RaisePropertyChanged("SByPhoneAvailable");
+                RaisePropertyChanged("SBySurnameAvailable");
             }
             else if (this.SByPhone == true)
             {
                 this.SByNameAvailable = false;
                 this.SByEmailAvailable = false;
                 this.SBySurnameAvailable = false;
+                RaisePropertyChanged("SByNameAvailable");
+                RaisePropertyChanged("SByEmailAvailable");
+                RaisePropertyChanged("SBySurnameAvailable");
             }
             else if (this.SByName == true && this.SBySurname == true)
             {
                 this.SByPhoneAvailable = false;
                 this.SByEmailAvailable = false;
+                RaisePropertyChanged("SByPhoneAvailable");
+                RaisePropertyChanged("SByEmailAvailable");
             }
             else if (this.SByName == true || this.SBySurname == true)
             {
                 this.SByPhoneAvailable = false;
                 this.SByEmailAvailable = false;
+                RaisePropertyChanged("SByPhoneAvailable");
+                RaisePropertyChanged("SByEmailAvailable");
             }
             else
             {
@@ -181,6 +198,10 @@ namespace WpfUI.ViewModel
                 this.SByPhoneAvailable = true;
                 this.SByNameAvailable = true;
                 this.SByEmailAvailable = true;
+                RaisePropertyChanged("SBySurnameAvailable");
+                RaisePropertyChanged("SByPhoneAvailable");
+                RaisePropertyChanged("SByNameAvailable");
+                RaisePropertyChanged("SByEmailAvailable");
             }
 
         }

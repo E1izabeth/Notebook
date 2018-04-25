@@ -32,7 +32,7 @@ namespace WpfUI.ViewModel
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            
+
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
             ////    // Create design time view services and models
@@ -43,39 +43,26 @@ namespace WpfUI.ViewModel
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
+            //SimpleIoc.Default.Register<SearchPanelViewModel>()
+            //SimpleIoc.Default.Register<AddContactViewModel>(true);
+            //SimpleIoc.Default.Register<MainViewModel>();
 
-            SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<SearchPanelViewModel>();
-            SimpleIoc.Default.Register<AddContactViewModel>();
+            this.Main = new MainViewModel(this);
+            this.AddPanel = new AddContactViewModel(this);
+            this.SearchPanel = new SearchPanelViewModel(this);
         }
 
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
+        public MainViewModel Main { get; }
 
-        public SearchPanelViewModel SearchPanel
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<SearchPanelViewModel>();
-            }
-        }
+        public SearchPanelViewModel SearchPanel { get; }
 
-        public AddContactViewModel AddPanel
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<AddContactViewModel>();
-            }
-        }
+        public AddContactViewModel AddPanel { get; }
 
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            //SimpleIoc.Default.Unregister<AddContactViewModel>();
+            //SimpleIoc.Default.Unregister<SearchPanelViewModel>();
+            //SimpleIoc.Default.Unregister<MainViewModel>();
         }
     }
 }

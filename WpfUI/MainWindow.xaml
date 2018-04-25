@@ -1,9 +1,22 @@
-﻿<Window x:Class="WpfUI.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+﻿<Window x:Class="WpfUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:WpfUI.ViewModel"
+        xmlns:res="clr-namespace:WpfUI.Resources"
         Title="{Binding Title}"
-        Width="500" Height="400" MinWidth="150" MinHeight="200"
+        Width="700" Height="500" MinWidth="150" MinHeight="200"
         Background="Lavender" Icon="Resources\008-group.png"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
-    
+    <Window.Resources>
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Foreground="Red" FontWeight="Bold">!</TextBlock>
+                <Border BorderBrush="Violet" BorderThickness="2">
+                    <AdornedElementPlaceholder />
+                </Border>
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -17,11 +30,6 @@
                     <Setter Property="MinWidth" Value="75" />
                     <Setter Property="HorizontalAlignment" Value="Right" />
                     <Setter Property="Focusable" Value="True" />
-                </Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontStyle" Value="Normal" />
-                    <Setter Property="FontSize" Value="14" />
-                    <Setter Property="FontFamily" Value="Arial" />
                 </Style>
                 <Style TargetType="MenuItem">
                     <Setter Property="FontStyle" Value="Normal" />
@@ -44,8 +52,8 @@
                     <RowDefinition Height="5" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchString}"  />
-                <Button Grid.Row="0" Grid.Column="2" Command="{Binding SearchCommand}" Content="Search" IsEnabled="{Binding SearchAvailable}">
+                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchString}" my:Helpers.InteractiveTextChangeBinding="True" />
+                <Button Grid.Row="0" Grid.Column="2" Command="{Binding SearchCommand}" Content="{x:Static res:text.Search}" IsEnabled="{Binding SearchAvailable}">
                     <Button.Triggers>
                         <EventTrigger RoutedEvent="Button.Click">
                             <BeginStoryboard Name="stbHideSearch">
@@ -60,10 +68,10 @@
                     </Button.Triggers>
                 </Button>
                 <WrapPanel Grid.Row="2" Grid.Column="0">
-                    <CheckBox Content="ByName" IsChecked="{Binding SByName}" IsEnabled="{Binding SByNameAvailable}" />
-                    <CheckBox Content="BySurname" IsChecked="{Binding SBySurname}" />
-                    <CheckBox Content="ByPhone" IsChecked="{Binding SByPhone}" />
-                    <CheckBox Content="ByEmail" IsChecked="{Binding SByEmail}" />
+                    <CheckBox Content="{x:Static res:text.By_name}" IsChecked="{Binding SByName}" IsEnabled="{Binding SByNameAvailable, Mode=TwoWay}" />
+                    <CheckBox Content="{x:Static res:text.By_surname}" IsChecked="{Binding SBySurname}" IsEnabled="{Binding SBySurnameAvailable, Mode=TwoWay}" />
+                    <CheckBox Content="{x:Static res:text.By_phone}" IsChecked="{Binding SByPhone}" IsEnabled="{Binding SByPhoneAvailable, Mode=TwoWay}" />
+                    <CheckBox Content="{x:Static res:text.By_email}" IsChecked="{Binding SByEmail}" IsEnabled="{Binding SByEmailAvailable, Mode=TwoWay}" />
                     <Button Margin="20,0,0,0" Content="Clear" />
                 </WrapPanel>
             </Grid>
@@ -74,6 +82,11 @@
                     <Style TargetType="TextBox">
                         <Setter Property="HorizontalAlignment" Value="Center" />
                         <Setter Property="MinWidth" Value="70" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                    <Style TargetType="Label">
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Margin" Value="1" />
                     </Style>
                 </Grid.Resources>
 
@@ -83,52 +96,91 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="0" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" />
-                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.FirstName}" />
+                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static res:text.First_name}" />
+                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Validation.ErrorTemplate="{StaticResource validationFailed}">
+                    <TextBox.Text>
+                        <Binding Path="ContactView.FirstName" ValidatesOnDataErrors="True" Mode="TwoWay" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Surname:" />
-                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.LastName}" />
+                <Label Grid.Row="2" Grid.Column="0" Content="{x:Static res:text.Last_name}" />
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Validation.ErrorTemplate="{StaticResource validationFailed}" >
+                    <TextBox.Text>
+                        <Binding Path="ContactView.LastName" ValidatesOnDataErrors="True" Mode="TwoWay" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="Nickname:" />
+                <Label Grid.Row="4" Grid.Column="0" Content="{x:Static res:text.Nickname}" />
                 <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Nickname}"/>
 
-                <TextBlock Grid.Row="6" Grid.Column="0" Text="Birthday:" />
-                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Birthday}" />
+                <Label Grid.Row="6" Grid.Column="0" Content="{x:Static res:text.Phone}" />
+                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Validation.ErrorTemplate="{StaticResource validationFailed}" >
+                    <TextBox.Text>
+                        <Binding Path="ContactView.Phone" ValidatesOnDataErrors="True" Mode="TwoWay" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBlock Grid.Row="8" Grid.Column="0" Text="Phone:" />
-                <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Phone}" />
+                <Label Grid.Row="8" Grid.Column="0" Content="{x:Static res:text.Birthday}" Validation.ErrorTemplate="{StaticResource validationFailed}" />
+                <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"  >
+                    <TextBox.Text>
+                        <Binding Path="ContactView.Birthday" ValidatesOnDataErrors="True" Mode="TwoWay" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBlock Grid.Row="10" Grid.Column="0" Text="Email:" />
-                <TextBox Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Email}" />
+                <Label Grid.Row="10" Grid.Column="0" Content="{x:Static res:text.Email}" />
+                <TextBox Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Validation.ErrorTemplate="{StaticResource validationFailed}" >
+                    <TextBox.Text>
+                        <Binding Path="ContactView.Email" ValidatesOnDataErrors="True" Mode="TwoWay" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                <TextBlock Grid.Row="12" Grid.Column="0" Text="Mailer:" />
+                <Label Grid.Row="12" Grid.Column="0" Content="{x:Static res:text.Mailer}" />
                 <TextBox Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Mailer}" />
 
-                <TextBlock Grid.Row="14" Grid.Column="0" Text="Note:" />
+                <Label Grid.Row="14" Grid.Column="0" Content="{x:Static res:text.Note}" />
                 <TextBox Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Note}" />
 
-                <Button Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="2" Content="Save"
-                       Command="{Binding SaveCommand}" >
+                <Button Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="2" Content="{x:Static res:text.Save}" IsEnabled="{Binding Path=IsAddAvailable, Mode=TwoWay}" Command="{Binding SaveCommand}" >
                     <Button.Triggers>
                         <EventTrigger RoutedEvent="Button.Click">
                             <BeginStoryboard Name="stbHideAddContact">
@@ -147,10 +199,10 @@
                 <ListView Margin="5" ItemsSource="{Binding Contacts}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock FontSize="14">
-                                <Run>Name: </Run>
+                            <TextBlock>
+                                <Run Text="{x:Static res:text.First_name}" />
                                 <Run Text="{Binding FirstName}"></Run>
-                                <Run>Surname:</Run>
+                                <Run Text="{x:Static res:text.Last_name}"/>
                                 <Run Text="{Binding LastName}"></Run>
                             </TextBlock>
                         </DataTemplate>
@@ -168,7 +220,7 @@
                 </Menu.ItemsPanel>
 
                 <MenuItem VerticalAlignment="Bottom" VerticalContentAlignment="Center"
-                          Header="View" ToolTip="View"
+                          Header="{x:Static res:text.View_all}" ToolTip="{x:Static res:text.View_all}"
                           Command="{Binding Path=ViewCommand}">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/007-eye.png" />
@@ -194,7 +246,7 @@
                 </MenuItem>
                 <MenuItem VerticalAlignment="Center" VerticalContentAlignment="Center"
                           DataContext="{Binding ElementName=grdSearchPanel}"
-                          Header="Search" ToolTip="Search">
+                          Header="{x:Static res:text.Search}" ToolTip="{x:Static res:text.Search}" >
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/magnifier.png" />
                     </MenuItem.Icon>
@@ -209,11 +261,11 @@
                         </EventTrigger>
                     </MenuItem.Triggers>
                 </MenuItem>
-                <MenuItem Header="New" ToolTip="New">
+                <MenuItem Header="{x:Static res:text.New_contact}" ToolTip="{x:Static res:text.New_contact}">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/new.png" />
                     </MenuItem.Icon>
-                    <MenuItem Header="Add" ToolTip="Add">
+                    <MenuItem Header="{x:Static res:text.Add_new}" ToolTip="{x:Static res:text.Add_new}">
                         <MenuItem.Icon>
                             <Image HorizontalAlignment="Center" Source="Resources/005-plus.png" />
                         </MenuItem.Icon>
@@ -228,18 +280,18 @@
                             </EventTrigger>
                         </MenuItem.Triggers>
                     </MenuItem>
-                    <MenuItem Header="Load" ToolTip="Load" Command="{Binding Path=LoadCommand}">
+                    <MenuItem Header="{x:Static res:text.Load_new}" ToolTip="{x:Static res:text.Load_new}" Command="{Binding Path=LoadCommand}">
                         <MenuItem.Icon>
                             <Image HorizontalAlignment="Center" Source="Resources/004-upload-button.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Open" ToolTip="Open" Command = "{Binding Path=OpenCommand}">
+                <MenuItem Header="{x:Static res:text.Open}" ToolTip="{x:Static res:text.Open}" Command = "{Binding Path=OpenCommand}">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/001-arrow.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Save" ToolTip="Save" Command = "{Binding Path=SaveCommand}">
+                <MenuItem Header="{x:Static res:text.Save}" ToolTip="{x:Static res:text.Save}" Command = "{Binding Path=SaveCommand}">
                     <MenuItem.Icon>
                         <Image HorizontalAlignment="Center" Source="Resources/003-download-symbol.png" />
                     </MenuItem.Icon>
