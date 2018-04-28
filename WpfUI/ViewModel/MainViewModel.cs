@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -30,6 +31,7 @@ namespace WpfUI.ViewModel
         /// </summary>
 
         public readonly AppConnector _app;
+        public bool IsServerConnected { get; set; }
         public string Title { get; }
         private ObservableCollection<IContactInfo> __listCond;
         private ObservableCollection<IContactInfo> _contacts;
@@ -40,6 +42,7 @@ namespace WpfUI.ViewModel
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-En");
             _owner = owner;
+            this.IsServerConnected = false;
 
             _app = new AppConnector(Client.Client.WCFclient());
             if (IsInDesignModeStatic)
@@ -64,6 +67,17 @@ namespace WpfUI.ViewModel
             });
 
             Messenger.Default.Send(_app, "GetAppConnector");
+
+            var th = new Thread(() => {
+                while (true)
+                {
+                    this.IsServerConnected = _app.Ping();
+                    RaisePropertyChanged("IsServerConnected");
+                }
+            });
+            th.Priority = ThreadPriority.Highest;
+            th.IsBackground = true;
+            th.Start();
         }
 
         internal void AddContact(ContactInfo contact)

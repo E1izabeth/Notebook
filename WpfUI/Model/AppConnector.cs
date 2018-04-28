@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using VCard;
 
@@ -17,6 +19,19 @@ namespace WpfUI
         public AppConnector(INotebook nb)
         {
             _book = nb;
+        }
+
+        public bool Ping()
+        {
+            try
+            {
+                var ping = _book.Ping();
+            }
+            catch(CommunicationException)
+            {
+                return false;
+            }
+            return true;
         }
 
         public IEnumerable<IContactInfo> ViewAll()

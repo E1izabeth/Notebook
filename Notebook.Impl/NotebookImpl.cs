@@ -88,6 +88,11 @@ namespace Notebook.Impl
             }
         }
 
+        public DateTime Ping()
+        {
+            return DateTime.Now;
+        }
+
         readonly List<Contact> _list;
         readonly RWLock _lock = new RWLock();
 

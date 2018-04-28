@@ -61,6 +61,11 @@ namespace Notebook.Impl
             _notebook.NewElement(contact);
         }
 
+        public DateTime Ping()
+        {
+            return _notebook.Ping();
+        }
+
         //public ContactInfo[] GetContacts(SearchSpec spec)
         //{
         //    var arr = _notebook.GetContacts(spec).ToList<IContactInfo>();

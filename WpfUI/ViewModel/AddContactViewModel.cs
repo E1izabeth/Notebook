@@ -74,7 +74,16 @@ namespace WpfUI.ViewModel
         public static readonly DependencyProperty EmailProperty =
             DependencyProperty.Register("Email", typeof(string), typeof(NewContactViewModel), new PropertyMetadata(string.Empty), o => ContactInfo.ValidEmail(o.ToString()));
 
-        
+        public string Nickname
+        {
+            get { return (string)GetValue(NicknameProperty); }
+            set { SetValue(NicknameProperty, value); }
+        }
+
+        public static readonly DependencyProperty NicknameProperty =
+            DependencyProperty.Register("Nickname", typeof(string), typeof(NewContactViewModel), new PropertyMetadata(string.Empty));
+
+
         protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             if (e.Property == PhoneProperty)
@@ -98,8 +107,7 @@ namespace WpfUI.ViewModel
                 this.Info.Birthday = e.NewValue.ToString();
             }
 
-            if (this.Birthday!=String.Empty && this.Email != String.Empty && this.Phone != String.Empty &&
-                this.LastName != String.Empty && this.FirstName != String.Empty)
+            if (this.Phone != String.Empty && (this.FirstName != String.Empty || this.LastName != String.Empty || this.Nickname != String.Empty))
             {
                 _addContactViewModel.IsAddAvailable = true;
             }

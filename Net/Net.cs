@@ -36,7 +36,7 @@ namespace Net
                 host.Opened += Host_Opened;
                 host.Open();
 
-                    Console.ReadLine();
+                Console.ReadLine();
             }
 
         }

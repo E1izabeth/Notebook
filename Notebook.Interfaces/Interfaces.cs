@@ -55,6 +55,10 @@ namespace Notebook.Interfaces
         [OperationContract(Name = "Count")]
         [WebGet(UriTemplate = "/contacts?action=getCount")]
         int Count();
+
+        [OperationContract(Name = "Ping")]
+        [WebGet(UriTemplate = "/contacts?action=ping")]
+        DateTime Ping();
     }
 
 

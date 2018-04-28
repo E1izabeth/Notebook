@@ -6,7 +6,9 @@
         Title="{Binding Title}"
         Width="700" Height="500" MinWidth="150" MinHeight="200"
         Background="Lavender" Icon="Resources\008-group.png"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        IsEnabled="{Binding IsServerConnected}" 
+        x:Name="mainWindow">
     <Window.Resources>
         <ControlTemplate x:Key="validationFailed">
             <StackPanel Orientation="Horizontal">
@@ -139,7 +141,7 @@
                 </TextBox>
 
                 <Label Grid.Row="4" Grid.Column="0" Content="{x:Static res:text.Nickname}" />
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Contact.Nickname}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ContactView.Nickname}"/>
 
                 <Label Grid.Row="6" Grid.Column="0" Content="{x:Static res:text.Phone}" />
                 <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Validation.ErrorTemplate="{StaticResource validationFailed}" >
@@ -208,6 +210,18 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <TextBlock Background="DarkBlue" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Connection aborted" Foreground="White">
+                    <TextBlock.Style>
+                        <Style>
+                            <Setter Property="TextBlock.Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsServerConnected}" Value="False">
+                                    <Setter Property="TextBlock.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </Grid>
         </DockPanel>
 

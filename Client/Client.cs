@@ -39,7 +39,7 @@ namespace Client
         public static INotebook WCFclient()
         {
             ChannelFactory<INotebook> factory = new ChannelFactory<INotebook>(new WebHttpBinding() {
-            }, new EndpointAddress(@"http://127.0.0.1:9091/Notebook/"));
+            }, new EndpointAddress(@"http://127.0.0.1:9090/Notebook/"));
             factory.Endpoint.Behaviors.Add(new WebHttpBehavior() {
             });
             INotebook proxy = factory.CreateChannel();
