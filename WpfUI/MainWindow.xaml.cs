@@ -18,6 +18,11 @@ namespace WpfUI
             //lbContactsList.ItemsSource = _app.ViewAll();
         }
 
+        private void ListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
+
 
         //    private void MnuSave_Click(object sender, RoutedEventArgs e)
         //    {

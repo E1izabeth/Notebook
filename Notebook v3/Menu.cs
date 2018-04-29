@@ -46,7 +46,6 @@ namespace Notebook
 
         private IMenuItem SelectMenu(IMenuItem currMenu)
         {
-            //Console.Clear();
             Console.WriteLine(currMenu.Text + ":");
 
             currMenu.ForEeach((item, n) => Console.WriteLine($"{n + 1}. {item.Text}"));

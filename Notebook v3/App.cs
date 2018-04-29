@@ -65,11 +65,6 @@ namespace Notebook
                         var nameParts = nameLine?.Value.Split(new[] { ';' }, 2);
                         var lastName = nameParts?.FirstOrDefault();
                         var firstName = nameParts?.Length < 2 ? string.Empty : nameParts.Last();
-                        /*
-                        var s = Console.ReadLine();
-                        var x = s ?? string.Empty;
-                        var t = s != null ? s : string.Empty ;
-                         */
                         ContactInfo contact = new ContactInfo {
                             FirstName = firstName,
                             LastName = lastName,
@@ -81,7 +76,6 @@ namespace Notebook
                             Note = entry.Contents.FirstOrDefault(l => l.Name == Names.NOTE)?.Value
                         };
                         _book.NewElement(contact);
-                        //throw new NotImplementedException("");
                     }
                 }
             }
@@ -91,60 +85,38 @@ namespace Notebook
         void NameSearch()
         {
             string query = _user.AskRequest();
-            //Request(Contact => Contact.Name.Contains(query));
             var contactInfos = _book.GetContacts(specName: new ByNameSearchCriteria(query));
             _user.PrintSelection(contactInfos);
-            //this.PerformQuery(new ByNameSearchCriteria(query));
         }
 
         void SurnameSearch()
         {
             string query = _user.AskRequest();
-            //Request(Contact => Contact.Surname.Contains(query));
             var contactInfos = _book.GetContacts(specSurname: new BySurnameSearchCriteria(query));
             _user.PrintSelection(contactInfos);
-            //this.PerformQuery(new BySurnameSearchCriteria(query));
         }
 
         void PhoneSearch()
         {
             string query = _user.AskRequest();
-            //Request(Contact => Contact.Phone.Contains(query));
             var contactInfos = _book.GetContacts(specPhone: new ByPhoneSearchCriteria(query));
             _user.PrintSelection(contactInfos);
-            //this.PerformQuery(new ByPhoneSearchCriteria(query));
         }
 
         void EmailSearch()
         {
             string query = _user.AskRequest();
-            //Request(Contact => Contact.Email.Contains(query));
             var contactInfos = _book.GetContacts(specEmail: new ByEmailSearchCriteria(query));
             _user.PrintSelection(contactInfos);
-            //this.PerformQuery(new ByEmailSearchCriteria(query));
         }
 
         void NameSurnameSearch()
         {
             string query = _user.AskRequest();
-            //Request(Contact => Contact.Name.Contains(query) || Contact.Surname.Contains(query));
             var contactInfos = _book.GetContacts(specName: new ByNameSearchCriteria(query), specSurname: new BySurnameSearchCriteria(query));
             _user.PrintSelection(contactInfos);
-            //this.PerformQuery(new ByNameSearchCriteria(query), new BySurnameSearchCriteria(query));
         }
-
-        //void PerformQuery(params SearchCriteria[] args)
-        //{
-        //    var searchParams = new SearchSpec(args);
-        //    var contactInfos = _book.GetContacts(searchParams);
-        //    _user.PrintSelection(contactInfos);
-        //}
-
-        /*void Request(Predicate<Contact> Selection)
-        {
-            _user.PrintSelection(_book.List.FindAll(Selection));
-        }*/
-
+        
         static void Main(string[] argc)
         {
             AppDomain.CurrentDomain.FirstChanceException += (sender, ea) => {
@@ -175,40 +147,33 @@ namespace Notebook
             menu.RunMenu();
         }
 
-        private void SaveNewContact(IContactInfo NewContact)
-        {
-            //var rnd = new Random();
-            //var allContacts = _book.GetContacts().ToArray();
-            //var contact = allContacts[rnd.Next(allContacts.Length)];
-
-            var file = new VCardFile(
-                new VCardEntry(
-                    string.Empty,
-                    new ContentLine(Names.VERSION, "3.0"),
-                    new ContentLine(Names.N, NewContact.LastName + ";" + NewContact.FirstName),
-                    new ContentLine(Names.FN, NewContact.LastName + " " + NewContact.FirstName),
-                    new ContentLine(Names.NICKNAME, NewContact.Nickname),
-                    new ContentLine(Names.BDAY, NewContact.Birthday),
-                    new ContentLine(Names.TEL, NewContact.Phone),
-                    new ContentLine(Names.EMAIL, NewContact.Email),
-                    new ContentLine(Names.MAILER, NewContact.Mailer),
-                    new ContentLine(Names.NOTE, NewContact.Note)
-                )
-            );
-
-            //var e = file.Entries.First();
-            //var rawName = e.Contents.FirstOrDefault(c => c.Name == Names.N);
-            //var name = rawName.Value.Split(';');
-
-            using (var stream = File.OpenWrite(@"D:/contacts/" + _book.Count() + "_contact.vcf"))
-            using (var writer = new StreamWriter(stream))
-            {
-                file.WriteTo(writer);
-            }
-        }
+        //private void SaveNewContact(IContactInfo NewContact)
+        //{
+        //    var file = new VCardFile(
+        //        new VCardEntry(
+        //            string.Empty,
+        //            new ContentLine(Names.VERSION, "3.0"),
+        //            new ContentLine(Names.N, NewContact.LastName + ";" + NewContact.FirstName),
+        //            new ContentLine(Names.FN, NewContact.LastName + " " + NewContact.FirstName),
+        //            new ContentLine(Names.NICKNAME, NewContact.Nickname),
+        //            new ContentLine(Names.BDAY, NewContact.Birthday),
+        //            new ContentLine(Names.TEL, NewContact.Phone),
+        //            new ContentLine(Names.EMAIL, NewContact.Email),
+        //            new ContentLine(Names.MAILER, NewContact.Mailer),
+        //            new ContentLine(Names.NOTE, NewContact.Note)
+        //        )
+        //    );
+            
+        //    using (var stream = File.OpenWrite(@"D:/contacts/" + _book.Count() + "_contact.vcf"))
+        //    using (var writer = new StreamWriter(stream))
+        //    {
+        //        file.WriteTo(writer);
+        //    }
+        //}
 
         void SaveAllContacts()
         {
+            string path = _user.LoadPath();
             var file = new VCardFile();
             foreach (var Tmp in _book.GetContacts().ToList())
             {
@@ -227,7 +192,7 @@ namespace Notebook
                         )
                 );
             }
-            using (var stream = File.OpenWrite(@"D:/contacts/Notebook.vcf"))
+            using (var stream = File.OpenWrite(path))
             using (var writer = new StreamWriter(stream))
             {
                 file.WriteTo(writer);

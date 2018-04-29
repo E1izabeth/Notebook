@@ -138,7 +138,7 @@ namespace Notebook
 
         public static bool ValidEmail(string email)
         {
-            if (/*!email.Contains("%40") &&*/ email.Contains("@") && (email.Contains(".ru") || email.Contains(".com")))
+            if (email.Contains("@") && (email.Contains(".ru") || email.Contains(".com")))
             {
                 return true;
             }

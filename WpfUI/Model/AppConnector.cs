@@ -43,7 +43,7 @@ namespace WpfUI
         public void AddNew(ContactInfo contact)
         {
             _book.NewElement(contact);
-            SaveNewContact(contact);
+            //SaveNewContact(contact);
         }
 
         public void LoadNew(string path)
@@ -108,33 +108,33 @@ namespace WpfUI
             return contactInfos.ToList<IContactInfo>();
         }
 
-        private void SaveNewContact(IContactInfo NewContact)
-        {
-            var file = new VCardFile(
-                new VCardEntry(
-                    string.Empty,
-                    new ContentLine(Names.VERSION, "3.0"),
-                    new ContentLine(Names.N, NewContact.LastName + ";" + NewContact.FirstName),
-                    new ContentLine(Names.FN, NewContact.LastName + " " + NewContact.FirstName),
-                    new ContentLine(Names.NICKNAME, NewContact.Nickname),
-                    new ContentLine(Names.BDAY, NewContact.Birthday),
-                    new ContentLine(Names.TEL, NewContact.Phone),
-                    new ContentLine(Names.EMAIL, NewContact.Email),
-                    new ContentLine(Names.MAILER, NewContact.Mailer),
-                    new ContentLine(Names.NOTE, NewContact.Note)
-                )
-            );
+        //private void SaveNewContact(IContactInfo NewContact)
+        //{
+        //    var file = new VCardFile(
+        //        new VCardEntry(
+        //            string.Empty,
+        //            new ContentLine(Names.VERSION, "3.0"),
+        //            new ContentLine(Names.N, NewContact.LastName + ";" + NewContact.FirstName),
+        //            new ContentLine(Names.FN, NewContact.LastName + " " + NewContact.FirstName),
+        //            new ContentLine(Names.NICKNAME, NewContact.Nickname),
+        //            new ContentLine(Names.BDAY, NewContact.Birthday),
+        //            new ContentLine(Names.TEL, NewContact.Phone),
+        //            new ContentLine(Names.EMAIL, NewContact.Email),
+        //            new ContentLine(Names.MAILER, NewContact.Mailer),
+        //            new ContentLine(Names.NOTE, NewContact.Note)
+        //        )
+        //    );
 
-            //var e = file.Entries.First();
-            //var rawName = e.Contents.FirstOrDefault(c => c.Name == Names.N);
-            //var name = rawName.Value.Split(';');
+        //    //var e = file.Entries.First();
+        //    //var rawName = e.Contents.FirstOrDefault(c => c.Name == Names.N);
+        //    //var name = rawName.Value.Split(';');
 
-            using (var stream = File.OpenWrite(@"D:/contacts/" + _book.Count() + "_contact.vcf"))
-            using (var writer = new StreamWriter(stream))
-            {
-                file.WriteTo(writer);
-            }
-        }
+        //    using (var stream = File.OpenWrite(@"D:/contacts/" + _book.Count() + "_contact.vcf"))
+        //    using (var writer = new StreamWriter(stream))
+        //    {
+        //        file.WriteTo(writer);
+        //    }
+        //}
 
         public void SaveAllContacts(string path)
         {

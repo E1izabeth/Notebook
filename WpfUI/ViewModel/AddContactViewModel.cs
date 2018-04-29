@@ -115,14 +115,12 @@ namespace WpfUI.ViewModel
             {
                 _addContactViewModel.IsAddAvailable = false;
             }
-            //PropertyChanged(_addContactViewModel.IsAddAvailable, new PropertyChangedEventArgs("IsAddAvailable"));
             base.OnPropertyChanged(e);
         }
     }
 
     public class AddContactViewModel : ViewModelBase
     {
-        // private AppConnector _app;
         private bool _isAddAvailable;
         public bool IsAddAvailable
         {

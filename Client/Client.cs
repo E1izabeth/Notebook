@@ -33,7 +33,7 @@ namespace Client
             var clientChannel = new TcpChannel();
             ChannelServices.RegisterChannel(clientChannel, false);
 
-            return (INotebook)Activator.GetObject(typeof(INotebook), "tcp://127.0.0.1:9090/RemoteObject.rem");
+            return (INotebook)Activator.GetObject(typeof(INotebook), $"tcp://127.0.0.1:{port}/RemoteObject.rem");
         }
 
         public static INotebook WCFclient()
